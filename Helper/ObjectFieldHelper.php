@@ -220,7 +220,7 @@ class ObjectFieldHelper
     /**
      * Set the field value.
      *
-     * @param object     $instance  The object instance
+     * @param mixed      $instance  The object instance
      * @param string     $fieldName The field name
      * @param mixed|null $value     The field value
      */
