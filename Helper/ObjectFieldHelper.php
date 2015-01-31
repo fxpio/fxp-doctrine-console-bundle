@@ -102,21 +102,8 @@ class ObjectFieldHelper
     {
         list($fields, $associations) = $this->getConfigs($className);
 
-        foreach ($fields as $field => $type) {
-            $mode = 'array' === $type
-                ? InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY
-                : InputOption::VALUE_REQUIRED;
-
-            if (!$definition->hasOption($field) && !$definition->hasArgument($field)) {
-                $definition->addOption(new InputOption($field, null, $mode, sprintf('The <comment>"%s"</comment> field', $field)));
-            }
-        }
-
-        foreach ($associations as $association => $classname) {
-            if (!$definition->hasOption($association) && !$definition->hasArgument($association)) {
-                $definition->addOption(new InputOption($association, null, InputOption::VALUE_REQUIRED, sprintf('The <comment>"%s"</comment> association identifier of <comment>"%s"</comment>', $association, $classname)));
-            }
-        }
+        $this->addOptions($definition, $fields, 'The <comment>"%s"</comment> field');
+        $this->addOptions($definition, $associations, 'The <comment>"%s"</comment> association identifier of <comment>"%s"</comment>');
     }
 
     /**
@@ -174,6 +161,26 @@ class ObjectFieldHelper
                 }
 
                 throw new ValidatorException($msg);
+            }
+        }
+    }
+
+    /**
+     * Add options in input definition.
+     *
+     * @param InputDefinition $definition  The input definition
+     * @param array           $fields      The fields
+     * @param string          $description The option description
+     */
+    protected function addOptions(InputDefinition $definition, array $fields, $description)
+    {
+        foreach ($fields as $field => $type) {
+            $mode = 'array' === $type
+                ? InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY
+                : InputOption::VALUE_REQUIRED;
+
+            if (!$definition->hasOption($field) && !$definition->hasArgument($field)) {
+                $definition->addOption(new InputOption($field, null, $mode, sprintf($description, $field, $type)));
             }
         }
     }
