@@ -13,9 +13,9 @@ namespace Sonatra\Bundle\DoctrineConsoleBundle\Helper;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use Sonatra\Bundle\DoctrineConsoleBundle\Util\ObjectFieldUtil;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Validator\Exception\ValidatorException;
 use Symfony\Component\Validator\ValidatorInterface;
 
@@ -87,8 +87,8 @@ class ObjectFieldHelper
     {
         list($fields, $associations) = $this->getConfigs($className);
 
-        $this->addOptions($definition, $fields, 'The <comment>"%s"</comment> field');
-        $this->addOptions($definition, $associations, 'The <comment>"%s"</comment> association identifier of <comment>"%s"</comment>');
+        ObjectFieldUtil::addOptions($definition, $fields, 'The <comment>"%s"</comment> field');
+        ObjectFieldUtil::addOptions($definition, $associations, 'The <comment>"%s"</comment> association identifier of <comment>"%s"</comment>');
     }
 
     /**
@@ -104,16 +104,16 @@ class ObjectFieldHelper
         $fieldNames = array_keys(array_merge($fields, $associations));
 
         foreach ($fieldNames as $fieldName) {
-            $value = $this->getFieldValue($input, $fieldName);
+            $value = ObjectFieldUtil::getFieldValue($input, $fieldName);
 
             if (empty($value)) {
                 continue;
             }
 
-            $value = $this->convertEmptyValue($value);
+            $value = ObjectFieldUtil::convertEmptyValue($value);
 
             if ((array_key_exists($fieldName, $fields))) {
-                $this->setFieldValue($instance, $fieldName, $value);
+                ObjectFieldUtil::setFieldValue($instance, $fieldName, $value);
                 continue;
             }
 
@@ -151,86 +151,6 @@ class ObjectFieldHelper
     }
 
     /**
-     * Add options in input definition.
-     *
-     * @param InputDefinition $definition  The input definition
-     * @param array           $fields      The fields
-     * @param string          $description The option description
-     */
-    protected function addOptions(InputDefinition $definition, array $fields, $description)
-    {
-        foreach ($fields as $field => $type) {
-            $mode = 'array' === $type
-                ? InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY
-                : InputOption::VALUE_REQUIRED;
-
-            if (!$definition->hasOption($field) && !$definition->hasArgument($field)) {
-                $definition->addOption(new InputOption($field, null, $mode, sprintf($description, $field, $type)));
-            }
-        }
-    }
-
-    /**
-     * Get field value in console input.
-     *
-     * @param InputInterface $input     The console input
-     * @param string         $fieldName The field name
-     *
-     * @return mixed|null
-     */
-    protected function getFieldValue(InputInterface $input, $fieldName)
-    {
-        $value = null;
-
-        if ($input->hasArgument($fieldName)) {
-            $value = $input->getArgument($fieldName);
-        } elseif ($input->hasOption($fieldName)) {
-            $value = $input->getOption($fieldName);
-        }
-
-        return $value;
-    }
-
-    /**
-     * Convert the magic "{{null}}" to null value and "{{empty}}" to array value.
-     *
-     * @param mixed $value
-     *
-     * @return mixed|null
-     */
-    protected function convertEmptyValue($value)
-    {
-        if ('{{null}}' === $value) {
-            $value = null;
-        } elseif ('{{empty}}' === $value) {
-            $value = array();
-        }
-
-        return $value;
-    }
-
-    /**
-     * Set the field value.
-     *
-     * @param mixed      $instance  The object instance
-     * @param string     $fieldName The field name
-     * @param mixed|null $value     The field value
-     */
-    protected function setFieldValue($instance, $fieldName, $value)
-    {
-        $setterMethodName = "set".ucfirst($fieldName);
-
-        try {
-            $ref = new \ReflectionClass($instance);
-            $ref->getMethod($setterMethodName);
-        } catch (\Exception $e) {
-            throw new \InvalidArgumentException(sprintf('The setter method "%s" that should be used for property "%s" seems not to exist. Please check your spelling in the command option or in your implementation class.', $setterMethodName, $fieldName));
-        }
-
-        $instance->$setterMethodName($value);
-    }
-
-    /**
      * Set the association field value.
      *
      * @param object     $instance  The object instance
@@ -239,7 +159,7 @@ class ObjectFieldHelper
      * @param string     $target    The target class name
      * @param string     $id        The doctrine identifier name
      */
-    protected function setAssociationValue($instance, $fieldName, $value, $target, $id)
+    private function setAssociationValue($instance, $fieldName, $value, $target, $id)
     {
         $targetRepo = $this->om->getRepository($target);
         $target = $targetRepo->findBy(array($id => $value));
@@ -248,7 +168,7 @@ class ObjectFieldHelper
             throw new \InvalidArgumentException(sprintf('The specified mapped field "%s" couldn\'t be found with the Id "%s".', $fieldName, $value));
         }
 
-        $this->setFieldValue($instance, $fieldName, $target[0]);
+        ObjectFieldUtil::setFieldValue($instance, $fieldName, $target[0]);
     }
 
     /**
