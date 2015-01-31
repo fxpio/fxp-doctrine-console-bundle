@@ -252,7 +252,7 @@ class ObjectFieldHelper
         $targetRepo = $this->om->getRepository($target);
         $target = $targetRepo->findBy(array($id => $value));
 
-        if (null == $target) {
+        if (null === $target) {
             throw new \InvalidArgumentException(sprintf('The specified mapped field "%s" couldn\'t be found with the Id "%s".', $fieldName, $value));
         }
 
