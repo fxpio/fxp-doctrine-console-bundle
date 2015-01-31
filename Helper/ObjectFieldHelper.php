@@ -12,6 +12,7 @@
 namespace Sonatra\Bundle\DoctrineConsoleBundle\Helper;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -67,26 +68,10 @@ class ObjectFieldHelper
         }
 
         if (!array_key_exists($className, $this->configs)) {
+            $this->configs[$className] = array(array(), array());
             $meta = $this->om->getClassMetadata($className);
-            $fieldList = $meta->getFieldNames();
-            $associationList = $meta->getAssociationNames();
-            $configFields = array();
-            $configAssociations = array();
-
-            foreach ($fieldList as $field) {
-                if (!$meta->isIdentifier($field)) {
-                    $configFields[$field] = $meta->getTypeOfField($field);
-                }
-            }
-
-            foreach ($associationList as $association) {
-                if (!$meta->isAssociationInverseSide($association)
-                    && $meta->isSingleValuedAssociation($association)) {
-                    $configAssociations[$association] = $meta->getAssociationTargetClass($association);
-                }
-            }
-
-            $this->configs[$className] = array($configFields, $configAssociations);
+            $this->addConfigFields($meta, $className);
+            $this->addConfigAssociations($meta, $className);
         }
 
         return $this->configs[$className];
@@ -264,5 +249,36 @@ class ObjectFieldHelper
         }
 
         $this->setFieldValue($instance, $fieldName, $target[0]);
+    }
+
+    /**
+     * Add the config of fields.
+     *
+     * @param ClassMetadata $metadata  The doctrine metadata
+     * @param string        $className The class name
+     */
+    private function addConfigFields(ClassMetadata $metadata, $className)
+    {
+        foreach ($metadata->getFieldNames() as $field) {
+            if (!$metadata->isIdentifier($field)) {
+                $this->configs[$className][0][$field] = $metadata->getTypeOfField($field);
+            }
+        }
+    }
+
+    /**
+     * Add the config of associations.
+     *
+     * @param ClassMetadata $metadata  The doctrine metadata
+     * @param string        $className The class name
+     */
+    private function addConfigAssociations(ClassMetadata $metadata, $className)
+    {
+        foreach ($metadata->getAssociationNames() as $association) {
+            if (!$metadata->isAssociationInverseSide($association)
+                && $metadata->isSingleValuedAssociation($association)) {
+                $this->configs[$className][1][$association] = $metadata->getAssociationTargetClass($association);
+            }
+        }
     }
 }
