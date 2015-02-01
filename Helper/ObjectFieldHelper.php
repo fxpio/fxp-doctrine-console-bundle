@@ -115,15 +115,9 @@ class ObjectFieldHelper
 
             if ((array_key_exists($fieldName, $fields))) {
                 ObjectFieldUtil::setFieldValue($instance, $fieldName, $value);
-                continue;
-            }
-
-            if ((array_key_exists($fieldName, $associations))) {
+            } elseif ((array_key_exists($fieldName, $associations))) {
                 $this->setAssociationValue($instance, $fieldName, $value, $associations[$fieldName], $targetId);
-                continue;
             }
-
-            throw new \InvalidArgumentException(sprintf('The field "%s" seems not to exist in your "%s" class.', $fieldName, get_class($instance)));
         }
     }
 
