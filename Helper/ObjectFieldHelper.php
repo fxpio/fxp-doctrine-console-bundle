@@ -16,6 +16,7 @@ use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Sonatra\Bundle\DoctrineConsoleBundle\Util\ObjectFieldUtil;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Exception\ValidatorException;
 use Symfony\Component\Validator\ValidatorInterface;
 
@@ -136,6 +137,7 @@ class ObjectFieldHelper
     public function validateObject($instance)
     {
         if (null !== $this->validator) {
+            /* @var ConstraintViolationInterface[] $errorList */
             $errorList = $this->validator->validate($instance);
 
             if (count($errorList) > 0) {
