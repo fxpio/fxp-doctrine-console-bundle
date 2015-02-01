@@ -16,7 +16,7 @@ use Sonatra\Bundle\DoctrineConsoleBundle\Tests\Helper\Fixtures\InstanceMock;
 use Symfony\Component\Console\Output\StreamOutput;
 
 /**
- * Bundle Extension Tests.
+ * Detail Object Helper Tests.
  *
  * @author François Pluchino <francois.pluchino@sonatra.com>
  */
