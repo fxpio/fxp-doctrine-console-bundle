@@ -18,12 +18,40 @@ namespace Sonatra\Bundle\DoctrineConsoleBundle\Tests\Helper\Fixtures;
  */
 class InstanceMock
 {
+    protected $name;
+    protected $children;
+    protected $valid;
+    protected $validationDate;
+    protected $numberOfTests;
+    protected $roles;
+    protected $listOfInteger;
+    protected $listOfDatetime;
+    protected $owner;
+
+    public function __construct()
+    {
+        $this->name = 'Foo bar';
+        $this->children = false;
+        $this->valid = true;
+        $this->validationDate = new \DateTime();
+        $this->numberOfTests = 42;
+        $this->roles = array('foo', 'bar');
+        $this->listOfInteger = array(1, 2);
+        $this->listOfDatetime = array(clone $this->validationDate, clone $this->validationDate);
+        $this->owner = new \stdClass();
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
     /**
      * @return string
      */
     public function getName()
     {
-        return 'Foo bar';
+        return $this->name;
     }
 
     /**
@@ -31,7 +59,7 @@ class InstanceMock
      */
     public function hasChildren()
     {
-        return false;
+        return $this->children;
     }
 
     /**
@@ -39,7 +67,7 @@ class InstanceMock
      */
     public function isValid()
     {
-        return true;
+        return $this->valid;
     }
 
     /**
@@ -47,7 +75,7 @@ class InstanceMock
      */
     public function getValidationDate()
     {
-        return new \DateTime();
+        return $this->validationDate;
     }
 
     /**
@@ -55,15 +83,20 @@ class InstanceMock
      */
     public function getNumberOfTests()
     {
-        return 42;
+        return $this->numberOfTests;
+    }
+
+    public function setRoles(array $roles)
+    {
+        $this->roles = $roles;
     }
 
     /**
      * @return string[]
      */
-    public function getListOfString()
+    public function getRoles()
     {
-        return array('foo', 'bar');
+        return $this->roles;
     }
 
     /**
@@ -71,7 +104,7 @@ class InstanceMock
      */
     public function getListOfInteger()
     {
-        return array(1, 2);
+        return $this->listOfInteger;
     }
 
     /**
@@ -79,14 +112,19 @@ class InstanceMock
      */
     public function getListOfDatetime()
     {
-        return array($this->getValidationDate(), $this->getValidationDate());
+        return $this->listOfDatetime;
+    }
+
+    public function setOwner(\stdClass $owner)
+    {
+        $this->owner = $owner;
     }
 
     /**
-     * @return self
+     * @return \stdClass
      */
-    public function getInvalidInstance()
+    public function getOwner()
     {
-        return $this;
+        return $this->owner;
     }
 }

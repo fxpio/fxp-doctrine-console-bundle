@@ -61,13 +61,13 @@ class DetailObjectHelperTest extends \PHPUnit_Framework_TestCase
             ' Has children     : False                    ',
             ' Validation date  : '.$validDate.' ',
             ' Number of tests  : 42                       ',
-            ' List of string   : foo                      ',
+            ' Roles            : foo                      ',
             '                    bar                      ',
             ' List of integer  : 1                        ',
             '                    2                        ',
             ' List of datetime : '.$validDate.' ',
             '                    '.$validDate.' ',
-            ' Invalid instance : format error             ',
+            ' Owner            : format error             ',
             '',
         );
         $this->assertSame(implode(PHP_EOL, $valid), $this->getDisplay());
