@@ -4,7 +4,7 @@ Sonatra Doctrine Console Bundle
 [![Latest Version](https://img.shields.io/packagist/v/sonatra/doctrine-console-bundle.svg)](https://packagist.org/packages/sonatra/doctrine-console-bundle)
 [![Build Status](https://img.shields.io/travis/sonatra/SonatraDoctrineConsoleBundle/master.svg)](https://travis-ci.org/sonatra/SonatraDoctrineConsoleBundle)
 [![Coverage Status](https://img.shields.io/coveralls/sonatra/SonatraDoctrineConsoleBundle/master.svg)](https://coveralls.io/r/sonatra/SonatraDoctrineConsoleBundle?branch=master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sonatra/SonatraDoctrineConsoleBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sonatra/SonatraDoctrineConsoleBundle?branch=master)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/sonatra/SonatraDoctrineConsoleBundle.svg)](https://scrutinizer-ci.com/g/sonatra/SonatraDoctrineConsoleBundle?branch=master)
 [![SensioLabsInsight](https://img.shields.io/sensiolabs/i/4d2d0222-0e32-4073-a53b-3d32c2a0c27f.svg)](https://insight.sensiolabs.com/projects/4d2d0222-0e32-4073-a53b-3d32c2a0c27f)
 
 The Sonatra DoctrineConsoleBundle is an helper for display and manage the doctrine object
