@@ -101,8 +101,10 @@ abstract class DetailObjectHelper
             $value = $value->format(\DateTime::ISO8601);
         } elseif (is_bool($value)) {
             $value = $value ? 'True' : 'False';
-        } elseif (is_array($value)) {
-            foreach ($value as $key => $arrayValue) {
+        } elseif (is_array($value) || $value instanceof \IteratorAggregate) {
+            $itValue = $value instanceof \IteratorAggregate ? $value->getIterator() : $value;
+            $value = array();
+            foreach ($itValue as $key => $arrayValue) {
                 $value[$key] = static::formatValue($arrayValue);
             }
             $value = implode("\n  ", $value);
