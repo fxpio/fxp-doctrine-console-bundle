@@ -59,6 +59,7 @@ class DetailObjectHelperTest extends \PHPUnit_Framework_TestCase
         $valid = array(
             ' Name             : Foo bar                  ',
             ' Has children     : False                    ',
+            ' Is valid         : True                     ',
             ' Validation date  : '.$validDate.' ',
             ' Number of tests  : 42                       ',
             ' Roles            : foo                      ',
