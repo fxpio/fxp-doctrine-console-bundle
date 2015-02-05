@@ -57,11 +57,10 @@ abstract class DetailObjectHelper
 
         foreach ($methods as $method) {
             $methodName = $method->getName();
-            $startMethod = substr($methodName, 0, 3);
 
-            if (in_array($startMethod, array('get', 'is', 'has')) && 0 === $method->getNumberOfParameters()) {
+            if (preg_match('/^get|has|is*+$/', $methodName) && 0 === $method->getNumberOfParameters()) {
                 $value = static::getFieldValue($instance, $methodName);
-                $methodName = 'get' === $startMethod ? substr($methodName, 3) : $methodName;
+                $methodName = preg_match('/^get/', $methodName) ? substr($methodName, 3) : $methodName;
                 $table->addRow(array('<comment>'.static::humanize($methodName).'</comment>', ': '.$value));
             }
         }
