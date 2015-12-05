@@ -20,7 +20,7 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Validator\ValidatorInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Object Field Helper Tests.
@@ -279,7 +279,7 @@ class ObjectFieldHelperTest extends \PHPUnit_Framework_TestCase
     public function testValidateObject()
     {
         /* @var ValidatorInterface|\PHPUnit_Framework_MockObject_MockObject $validator */
-        $validator = $this->getMock('Symfony\Component\Validator\ValidatorInterface');
+        $validator = $this->getMock('Symfony\Component\Validator\Validator\ValidatorInterface');
         $validator->expects($this->any())
             ->method('validate')
             ->will($this->returnValue(array()));
@@ -293,7 +293,7 @@ class ObjectFieldHelperTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('Symfony\Component\Validator\Exception\ValidatorException');
 
         /* @var ValidatorInterface|\PHPUnit_Framework_MockObject_MockObject $validator */
-        $validator = $this->getMock('Symfony\Component\Validator\ValidatorInterface');
+        $validator = $this->getMock('Symfony\Component\Validator\Validator\ValidatorInterface');
         $constraint = $this->getMock('Symfony\Component\Validator\ConstraintViolationInterface');
         $constraint->expects($this->any())
             ->method('getPropertyPath')
