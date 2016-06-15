@@ -90,7 +90,7 @@ abstract class ObjectFieldUtil
      */
     public static function setFieldValue($instance, $fieldName, $value)
     {
-        $setterMethodName = "set".ucfirst($fieldName);
+        $setterMethodName = 'set'.ucfirst($fieldName);
 
         try {
             $ref = new \ReflectionClass($instance);
