@@ -30,24 +30,24 @@ class CommandBuilderTest extends \PHPUnit_Framework_TestCase
         $configs = array(
             'FooClass' => array(
                 'adapter' => array(
-                    'command_prefix'                  => 'command:prefix',
-                    'service_manager'                 => 'service_manager_id',
-                    'short_name'                      => 'Short Name',
-                    'command_description'             => 'The command description',
-                    'identifier_field'                => 'id',
-                    'identifier_argument'             => 'identifier',
+                    'command_prefix' => 'command:prefix',
+                    'service_manager' => 'service_manager_id',
+                    'short_name' => 'Short Name',
+                    'command_description' => 'The command description',
+                    'identifier_field' => 'id',
+                    'identifier_argument' => 'identifier',
                     'identifier_argument_description' => 'The description of identifier argument of %s',
-                    'display_name_method'             => 'getId',
-                    'create_method'                   => null,
-                    'get_method'                      => null,
-                    'update_method'                   => null,
-                    'delete_method'                   => null,
-                    'undelete_method'                 => null,
+                    'display_name_method' => 'getId',
+                    'create_method' => null,
+                    'get_method' => null,
+                    'update_method' => null,
+                    'delete_method' => null,
+                    'undelete_method' => null,
                 ),
                 'view' => array(
-                    'enabled'         => true,
+                    'enabled' => true,
                     'field_arguments' => array(),
-                    'field_options'   => array(),
+                    'field_options' => array(),
                 ),
                 'create' => array(
                     'enabled' => false,
@@ -95,7 +95,7 @@ class CommandBuilderTest extends \PHPUnit_Framework_TestCase
 
         $valid = array(
             'sonatra_doctrine_console.command_adapter.command_prefix' => $validAdapterDef,
-            'sonatra_doctrine_console.commands.command_prefix.view'   => $validCommandDef,
+            'sonatra_doctrine_console.commands.command_prefix.view' => $validCommandDef,
         );
         $this->assertEquals($valid, $container->getDefinitions());
     }

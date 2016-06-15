@@ -26,10 +26,10 @@ abstract class CommandBuilder
      * @var array
      */
     protected static $commands = array(
-        'view'     => 'Sonatra\Bundle\DoctrineConsoleBundle\Command\View',
-        'create'   => 'Sonatra\Bundle\DoctrineConsoleBundle\Command\Create',
-        'edit'     => 'Sonatra\Bundle\DoctrineConsoleBundle\Command\Edit',
-        'delete'   => 'Sonatra\Bundle\DoctrineConsoleBundle\Command\Delete',
+        'view' => 'Sonatra\Bundle\DoctrineConsoleBundle\Command\View',
+        'create' => 'Sonatra\Bundle\DoctrineConsoleBundle\Command\Create',
+        'edit' => 'Sonatra\Bundle\DoctrineConsoleBundle\Command\Edit',
+        'delete' => 'Sonatra\Bundle\DoctrineConsoleBundle\Command\Delete',
         'undelete' => 'Sonatra\Bundle\DoctrineConsoleBundle\Command\Undelete',
     );
 

@@ -91,8 +91,8 @@ class ObjectFieldHelperTest extends \PHPUnit_Framework_TestCase
         $configs = $this->ofh->getConfigs(new \stdClass());
         $valid = array(
             array(
-                'name'           => 'string',
-                'roles'          => 'array',
+                'name' => 'string',
+                'roles' => 'array',
                 'validationDate' => 'datetime',
             ),
             array(
@@ -160,7 +160,7 @@ class ObjectFieldHelperTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(array('foo', 'bar'), $instance->getRoles());
 
         $input = new ArrayInput(array(
-            'name'    => 'New Name',
+            'name' => 'New Name',
             '--roles' => array('Role1', 'Role 2'),
         ), $def);
         $this->ofh->injectNewValues($input, $instance);
@@ -189,6 +189,7 @@ class ObjectFieldHelperTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(array(), $instance->getRoles());
     }
 
+    /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessageRegExp /The setter method "(\w+)" that should be used for property "(\w+)" seems not to exist./
      */
