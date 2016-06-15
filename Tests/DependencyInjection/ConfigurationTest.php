@@ -34,11 +34,12 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($validConfig, $res);
     }
 
+    /**
+     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
+     * @expectedExceptionMessageRegExp /The child node "(\w+)" at path "([\w\.\-\_]+)" must be configured./
+     */
     public function testConfigurationWithoutAdapter()
     {
-        $msg = '/The child node "(\w+)" at path "([\w\.\-\_]+)" must be configured./';
-        $this->setExpectedExceptionRegExp('Symfony\Component\Config\Definition\Exception\InvalidConfigurationException', $msg);
-
         $process = new Processor();
         $configs = array(
             'root' => array(
@@ -52,11 +53,12 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $process->process($config->getConfigTreeBuilder()->buildTree(), $configs);
     }
 
+    /**
+     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
+     * @expectedExceptionMessageRegExp /The child node "service_manager" at path "([\w\.\-\_]+)" must be configured./
+     */
     public function testConfigurationWithMissingRequireFieldForAdapterConfig()
     {
-        $msg = '/The child node "service_manager" at path "([\w\.\-\_]+)" must be configured./';
-        $this->setExpectedExceptionRegExp('Symfony\Component\Config\Definition\Exception\InvalidConfigurationException', $msg);
-
         $process = new Processor();
         $configs = array(
             'root' => array(

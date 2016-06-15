@@ -44,33 +44,48 @@ class ServiceManagerAdapterTest extends \PHPUnit_Framework_TestCase
         $this->adapter = null;
     }
 
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessageRegExp /The "(\w+)" method for "(\w+)" adapter is does not supported/
+     */
     public function testInvalidCreateMethod()
     {
-        $this->setMethodIsNotSupported();
         $this->adapter->create();
     }
 
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessageRegExp /The "(\w+)" method for "(\w+)" adapter is does not supported/
+     */
     public function testInvalidGetMethod()
     {
-        $this->setMethodIsNotSupported();
         $this->adapter->get('identifier');
     }
 
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessageRegExp /The "(\w+)" method for "(\w+)" adapter is does not supported/
+     */
     public function testInvalidUpdateMethod()
     {
-        $this->setMethodIsNotSupported();
         $this->adapter->update(new \stdClass());
     }
 
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessageRegExp /The "(\w+)" method for "(\w+)" adapter is does not supported/
+     */
     public function testInvalidDeleteMethod()
     {
-        $this->setMethodIsNotSupported();
         $this->adapter->delete(new \stdClass());
     }
 
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessageRegExp /The "(\w+)" method for "(\w+)" adapter is does not supported/
+     */
     public function testInvalidUndeleteMethod()
     {
-        $this->setMethodIsNotSupported();
         $this->adapter->undelete('identifier');
     }
 
@@ -120,11 +135,12 @@ class ServiceManagerAdapterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($valid, $this->adapter->get('42'));
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessageRegExp /The ([\w ]+) with the identifier "(\w+)" does not exist/
+     */
     public function testGetWithNonexistentModel()
     {
-        $msg = '/The ([\w ]+) with the identifier "(\w+)" does not exist/';
-        $this->setExpectedExceptionRegExp('InvalidArgumentException', $msg);
-
         $this->adapter->setShortName('Foo Bar');
         $this->adapter->setGetMethod('findMockBy');
         $valid = new \stdClass();
@@ -154,10 +170,5 @@ class ServiceManagerAdapterTest extends \PHPUnit_Framework_TestCase
         $valid = new \stdClass();
         $valid->id = '42';
         $this->assertEquals($valid, $this->adapter->undelete('42'));
-    }
-
-    private function setMethodIsNotSupported()
-    {
-        $this->setExpectedExceptionRegExp('RuntimeException', '/The "(\w+)" method for "(\w+)" adapter is does not supported/');
     }
 }

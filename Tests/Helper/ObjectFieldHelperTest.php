@@ -46,10 +46,10 @@ class ObjectFieldHelperTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->om = $this->getMock('Doctrine\Common\Persistence\ObjectManager');
+        $this->om = $this->getMockBuilder('Doctrine\Common\Persistence\ObjectManager')->getMock();
         $this->ofh = new ObjectFieldHelper($this->om);
 
-        $this->meta = $this->getMock('Doctrine\Common\Persistence\Mapping\ClassMetadata');
+        $this->meta = $this->getMockBuilder('Doctrine\Common\Persistence\Mapping\ClassMetadata')->getMock();
         $this->meta->expects($this->any())
             ->method('getFieldNames')
             ->will($this->returnValue(array('name', 'roles', 'validationDate')));
@@ -189,9 +189,11 @@ class ObjectFieldHelperTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(array(), $instance->getRoles());
     }
 
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessageRegExp /The setter method "(\w+)" that should be used for property "(\w+)" seems not to exist./
+     */
     public function testInjectFieldNewValuesWithInvalidSetter()
     {
-        $this->setExpectedExceptionRegExp('InvalidArgumentException', '/The setter method "(\w+)" that should be used for property "(\w+)" seems not to exist.*/');
         $instance = new InstanceMock();
         $def = new InputDefinition();
         $this->ofh->injectFieldOptions($def, $instance);
@@ -210,7 +212,7 @@ class ObjectFieldHelperTest extends \PHPUnit_Framework_TestCase
         $validOwner = new \stdClass();
 
         /* @var ObjectRepository|\PHPUnit_Framework_MockObject_MockObject $targetRepo */
-        $targetRepo = $this->getMock('Doctrine\Common\Persistence\ObjectRepository');
+        $targetRepo = $this->getMockBuilder('Doctrine\Common\Persistence\ObjectRepository')->getMock();
 
         $this->om->expects($this->any())
             ->method('getRepository')
@@ -235,12 +237,14 @@ class ObjectFieldHelperTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($validOwner, $instance->getOwner());
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessageRegExp /The specified mapped field "(\w+)" couldn\'t be found with the Id "(\w+)"./
+     */
     public function testInjectAssociationNewValuesWithNonexistentTarget()
     {
-        $this->setExpectedExceptionRegExp('InvalidArgumentException', '/The specified mapped field "(\w+)" couldn\'t be found with the Id "(\w+)"./');
-
         /* @var ObjectRepository|\PHPUnit_Framework_MockObject_MockObject $targetRepo */
-        $targetRepo = $this->getMock('Doctrine\Common\Persistence\ObjectRepository');
+        $targetRepo = $this->getMockBuilder('Doctrine\Common\Persistence\ObjectRepository')->getMock();
 
         $this->om->expects($this->any())
             ->method('getRepository')
@@ -279,7 +283,7 @@ class ObjectFieldHelperTest extends \PHPUnit_Framework_TestCase
     public function testValidateObject()
     {
         /* @var ValidatorInterface|\PHPUnit_Framework_MockObject_MockObject $validator */
-        $validator = $this->getMock('Symfony\Component\Validator\Validator\ValidatorInterface');
+        $validator = $this->getMockBuilder('Symfony\Component\Validator\Validator\ValidatorInterface')->getMock();
         $validator->expects($this->any())
             ->method('validate')
             ->will($this->returnValue(array()));
@@ -288,13 +292,14 @@ class ObjectFieldHelperTest extends \PHPUnit_Framework_TestCase
         $this->ofh->validateObject(new \stdClass());
     }
 
+    /**
+     * @expectedException \Symfony\Component\Validator\Exception\ValidatorException
+     */
     public function testValidateObjectWithException()
     {
-        $this->setExpectedException('Symfony\Component\Validator\Exception\ValidatorException');
-
         /* @var ValidatorInterface|\PHPUnit_Framework_MockObject_MockObject $validator */
-        $validator = $this->getMock('Symfony\Component\Validator\Validator\ValidatorInterface');
-        $constraint = $this->getMock('Symfony\Component\Validator\ConstraintViolationInterface');
+        $validator = $this->getMockBuilder('Symfony\Component\Validator\Validator\ValidatorInterface')->getMock();
+        $constraint = $this->getMockBuilder('Symfony\Component\Validator\ConstraintViolationInterface')->getMock();
         $constraint->expects($this->any())
             ->method('getPropertyPath')
             ->will($this->returnValue('property_path'));
