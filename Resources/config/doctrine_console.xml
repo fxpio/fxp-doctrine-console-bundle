@@ -6,7 +6,7 @@
     <services>
         <service id="sonatra_doctrine_console.console.object_field_helper" class="Sonatra\Bundle\DoctrineConsoleBundle\Helper\ObjectFieldHelper">
             <argument type="service" id="doctrine.orm.entity_manager" />
-            <argument type="service" id="validator" on-invalid="ignore" />
+            <argument type="service" id="validator" on-invalid="null" />
         </service>
     </services>
 </container>
