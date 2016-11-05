@@ -67,7 +67,7 @@ class CommandBuilderTest extends \PHPUnit_Framework_TestCase
         CommandBuilder::buildCommands($container, $configs);
 
         $this->assertCount(2, $container->getDefinitions());
-        $validAdapterDef = new Definition('Sonatra\Bundle\DoctrineConsoleBundle\Adapter\ServiceManagerAdapter');
+        $validAdapterDef = new Definition('Sonatra\Component\DoctrineConsole\Adapter\ServiceManagerAdapter');
         $validAdapterDef
             ->addArgument(new Reference('service_manager_id'))
             ->addMethodCall('setClass', array('FooClass'))
@@ -84,7 +84,7 @@ class CommandBuilderTest extends \PHPUnit_Framework_TestCase
             ->addMethodCall('setDeleteMethod', array(null))
             ->addMethodCall('setUndeleteMethod', array(null))
         ;
-        $validCommandDef = new Definition('Sonatra\Bundle\DoctrineConsoleBundle\Command\View');
+        $validCommandDef = new Definition('Sonatra\Component\DoctrineConsole\Command\View');
         $validCommandDef
             ->addArgument(new Reference('sonatra_doctrine_console.console.object_field_helper'))
             ->addArgument(new Reference('sonatra_doctrine_console.command_adapter.command_prefix'))

@@ -26,11 +26,11 @@ abstract class CommandBuilder
      * @var array
      */
     protected static $commands = array(
-        'view' => 'Sonatra\Bundle\DoctrineConsoleBundle\Command\View',
-        'create' => 'Sonatra\Bundle\DoctrineConsoleBundle\Command\Create',
-        'edit' => 'Sonatra\Bundle\DoctrineConsoleBundle\Command\Edit',
-        'delete' => 'Sonatra\Bundle\DoctrineConsoleBundle\Command\Delete',
-        'undelete' => 'Sonatra\Bundle\DoctrineConsoleBundle\Command\Undelete',
+        'view' => 'Sonatra\Component\DoctrineConsole\Command\View',
+        'create' => 'Sonatra\Component\DoctrineConsole\Command\Create',
+        'edit' => 'Sonatra\Component\DoctrineConsole\Command\Edit',
+        'delete' => 'Sonatra\Component\DoctrineConsole\Command\Delete',
+        'undelete' => 'Sonatra\Component\DoctrineConsole\Command\Undelete',
     );
 
     /**
@@ -68,7 +68,7 @@ abstract class CommandBuilder
         if (is_array($config)) {
             $id = 'sonatra_doctrine_console.command_adapter.'
                 .str_replace(array(':', '-'), '_', $config['command_prefix']);
-            $def = new Definition('Sonatra\Bundle\DoctrineConsoleBundle\Adapter\ServiceManagerAdapter');
+            $def = new Definition('Sonatra\Component\DoctrineConsole\Adapter\ServiceManagerAdapter');
             $def
                 ->addArgument(new Reference($config['service_manager']))
                 ->addMethodCall('setClass', array($classname))
