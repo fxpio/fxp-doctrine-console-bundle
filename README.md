@@ -10,6 +10,11 @@ Sonatra Doctrine Console Bundle
 The Sonatra DoctrineConsoleBundle is an helper for display and manage the doctrine object
 in console.
 
+Features include:
+
+- All features of [Sonatra Doctrine Console](https://github.com/sonatra/sonatra-doctrine-console)
+- Command builder by config
+
 Documentation
 -------------
 
