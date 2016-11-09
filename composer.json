@@ -3,7 +3,7 @@
     "type": "symfony-bundle",
     "description": "Helper for display and manage the doctrine object in console",
     "keywords": ["doctrine", "console", "helper", "object", "entity", "command", "manipulation"],
-    "homepage": "https://github.com/sonatra/SonatraDoctrineConsoleBundle",
+    "homepage": "https://github.com/sonatra/sonatra-doctrine-console-bundle",
     "license": "MIT",
     "authors": [
         {
