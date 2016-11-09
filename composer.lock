@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c12e264432bc8e9d1d255b13f925bb11",
+    "hash": "1758cea93dee53c17667ad30e4e98da7",
     "content-hash": "d5e1b93fe64ea9c1338a5b583067e4c4",
     "packages": [
         {
@@ -407,16 +407,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.3",
+            "version": "v2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "c0125896dbb151380ab47e96c621741e79623beb"
+                "reference": "a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/c0125896dbb151380ab47e96c621741e79623beb",
-                "reference": "c0125896dbb151380ab47e96c621741e79623beb",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e",
+                "reference": "a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e",
                 "shasum": ""
             },
             "require": {
@@ -451,7 +451,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-10-17 15:23:22"
+            "time": "2016-11-07 23:38:38"
         },
         {
             "name": "psr/cache",
@@ -552,17 +552,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonatra/sonatra-doctrine-console.git",
-                "reference": "ac2e6da82eab830073f8e4ad8ab14c14ae737a8e"
+                "reference": "fea7c8c49e7cba9a5bb8206271a46562c6afa962"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonatra/sonatra-doctrine-console/zipball/ac2e6da82eab830073f8e4ad8ab14c14ae737a8e",
-                "reference": "ac2e6da82eab830073f8e4ad8ab14c14ae737a8e",
+                "url": "https://api.github.com/repos/sonatra/sonatra-doctrine-console/zipball/fea7c8c49e7cba9a5bb8206271a46562c6afa962",
+                "reference": "fea7c8c49e7cba9a5bb8206271a46562c6afa962",
                 "shasum": ""
             },
             "require": {
                 "doctrine/common": "~2.6",
-                "php": ">=5.5.0",
+                "php": ">=5.6.0",
                 "symfony/console": "~3.0"
             },
             "require-dev": {
@@ -603,7 +603,7 @@
                 "manipulation",
                 "object"
             ],
-            "time": "2016-11-05 10:47:12"
+            "time": "2016-11-05 14:16:51"
         },
         {
             "name": "symfony/asset",
