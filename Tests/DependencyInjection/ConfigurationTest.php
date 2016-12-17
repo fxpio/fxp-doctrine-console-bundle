@@ -152,7 +152,6 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                         'update_method' => null,
                         'delete_method' => null,
                         'undelete_method' => null,
-
                     ),
                     'view' => array(
                         'enabled' => false,
