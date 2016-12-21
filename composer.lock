@@ -504,12 +504,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonatra/sonatra-doctrine-console.git",
-                "reference": "fa65a9563a40f8d613e2dd5da2e7a4f2e41ed534"
+                "reference": "d4725b52dac33b7f3957d5085530eb9f6ec862fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonatra/sonatra-doctrine-console/zipball/fa65a9563a40f8d613e2dd5da2e7a4f2e41ed534",
-                "reference": "fa65a9563a40f8d613e2dd5da2e7a4f2e41ed534",
+                "url": "https://api.github.com/repos/sonatra/sonatra-doctrine-console/zipball/d4725b52dac33b7f3957d5085530eb9f6ec862fd",
+                "reference": "d4725b52dac33b7f3957d5085530eb9f6ec862fd",
                 "shasum": ""
             },
             "require": {
@@ -518,6 +518,8 @@
                 "symfony/console": "~3.0"
             },
             "require-dev": {
+                "sonatra/default-value": "~1.0@dev",
+                "sonatra/resource": "~1.0@dev",
                 "symfony/validator": "~3.0"
             },
             "type": "library",
@@ -555,7 +557,7 @@
                 "manipulation",
                 "object"
             ],
-            "time": "2016-12-21 16:43:47"
+            "time": "2016-12-21 18:22:24"
         },
         {
             "name": "symfony/cache",
