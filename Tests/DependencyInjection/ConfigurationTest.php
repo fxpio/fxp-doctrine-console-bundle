@@ -36,26 +36,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     * @expectedExceptionMessageRegExp /The child node "(\w+)" at path "([\w\.\-\_]+)" must be configured./
-     */
-    public function testConfigurationWithoutAdapter()
-    {
-        $process = new Processor();
-        $configs = array(
-            'root' => array(
-                'commands' => array(
-                    'FooClass' => array(),
-                ),
-            ),
-        );
-
-        $config = new Configuration();
-        $process->process($config->getConfigTreeBuilder()->buildTree(), $configs);
-    }
-
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     * @expectedExceptionMessageRegExp /The child node "service_manager" at path "([\w\.\-\_]+)" must be configured./
+     * @expectedExceptionMessageRegExp /The child node "manager_id" at path "([\w\.\-\_]+)" must be configured./
      */
     public function testConfigurationWithMissingRequireFieldForAdapterConfig()
     {
@@ -64,7 +45,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
             'root' => array(
                 'commands' => array(
                     'FooClass' => array(
-                        'adapter' => array(),
+                        'service_manager_adapter' => array(),
                     ),
                 ),
             ),
@@ -81,7 +62,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
             'root' => array(
                 'commands' => array(
                     'FooClass' => array(
-                        'adapter' => 'adapter_service.foo_class',
+                        'adapter_id' => 'adapter_service.foo_class',
                         'create' => array(
                             'field_options' => array(
                                 'test' => array(
@@ -91,10 +72,11 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                         ),
                     ),
                     'BarClass' => array(
-                        'adapter' => array(
-                            'service_manager' => 'manager_service.bar_class',
+                        'service_manager_adapter' => array(
+                            'manager_id' => 'manager_service.bar_class',
                             'short_name' => 'Short Name',
                             'command_prefix' => 'model:bar',
+                            'display_name_method' => 'getName',
                         ),
                     ),
                 ),
@@ -103,7 +85,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $validConfig = array(
             'commands' => array(
                 'FooClass' => array(
-                    'adapter' => 'adapter_service.foo_class',
+                    'adapter_id' => 'adapter_service.foo_class',
                     'view' => array(
                         'enabled' => false,
                         'field_arguments' => array(),
@@ -121,7 +103,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                             ),
                         ),
                     ),
-                    'edit' => array(
+                    'update' => array(
                         'enabled' => false,
                         'field_arguments' => array(),
                         'field_options' => array(),
@@ -138,15 +120,16 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                     ),
                 ),
                 'BarClass' => array(
-                    'adapter' => array(
-                        'service_manager' => 'manager_service.bar_class',
+                    'service_manager_adapter' => array(
+                        'manager_id' => 'manager_service.bar_class',
                         'short_name' => 'Short Name',
                         'command_prefix' => 'model:bar',
                         'command_description' => 'The "%s" command of <comment>"%s"</comment> class',
                         'identifier_field' => 'id',
                         'identifier_argument' => 'identifier',
                         'identifier_argument_description' => 'The unique identifier of %s',
-                        'display_name_method' => null,
+                        'display_name_method' => 'getName',
+                        'new_instance_method' => null,
                         'create_method' => null,
                         'get_method' => null,
                         'update_method' => null,
@@ -163,7 +146,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                         'field_arguments' => array(),
                         'field_options' => array(),
                     ),
-                    'edit' => array(
+                    'update' => array(
                         'enabled' => false,
                         'field_arguments' => array(),
                         'field_options' => array(),

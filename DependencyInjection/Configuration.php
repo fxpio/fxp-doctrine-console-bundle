@@ -15,7 +15,6 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
 /**
  * Configuration of the securitybundle to get the sonatra_security options.
@@ -24,6 +23,14 @@ use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
  */
 class Configuration implements ConfigurationInterface
 {
+    /**
+     * @var string[]
+     */
+    const ADAPTERS = array(
+        'adapter_id',
+        'service_manager_adapter',
+    );
+
     /**
      * {@inheritdoc}
      */
@@ -54,9 +61,10 @@ class Configuration implements ConfigurationInterface
             ->prototype('array')
                 ->children()
                     ->append($this->getAdapterConfig())
+                    ->append($this->getServiceManagerAdapterConfig())
                     ->append($this->createCommand('view'))
                     ->append($this->createCommand('create'))
-                    ->append($this->createCommand('edit'))
+                    ->append($this->createCommand('update'))
                     ->append($this->createCommand('delete'))
                     ->append($this->createCommand('undelete'))
                 ->end()
@@ -67,85 +75,44 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * Get the node of command config.
+     * Get the adapter node.
      *
-     * @return ArrayNodeDefinition
+     * @return NodeDefinition
      */
     protected function getAdapterConfig()
     {
-        $node = static::createNode('adapter');
-        $this->configAdapterValidation($node);
-
-        $node
-            ->isRequired()
-        ->children()
-            ->scalarNode('service_id')->defaultNull()->end()
-            ->scalarNode('service_manager')->cannotBeEmpty()->defaultNull()->end()
-            ->scalarNode('short_name')->cannotBeEmpty()->defaultNull()->end()
-            ->scalarNode('command_prefix')->cannotBeEmpty()->defaultNull()->end()
-            ->scalarNode('command_description')->cannotBeEmpty()->defaultValue('The "%s" command of <comment>"%s"</comment> class')->end()
-            ->scalarNode('identifier_field')->cannotBeEmpty()->defaultValue('id')->end()
-            ->scalarNode('identifier_argument')->cannotBeEmpty()->defaultValue('identifier')->end()
-            ->scalarNode('identifier_argument_description')->cannotBeEmpty()->defaultValue('The unique identifier of %s')->end()
-            ->scalarNode('display_name_method')->cannotBeEmpty()->defaultNull()->end()
-            ->scalarNode('create_method')->defaultNull()->end()
-            ->scalarNode('get_method')->defaultNull()->end()
-            ->scalarNode('update_method')->defaultNull()->end()
-            ->scalarNode('delete_method')->defaultNull()->end()
-            ->scalarNode('undelete_method')->defaultNull()->end()
-        ->end();
-
-        return $node;
+        return static::createNode('adapter_id', 'scalar');
     }
 
     /**
-     * Configure the node definition of adapter.
+     * Get the service manager adapter node.
      *
-     * @param NodeDefinition $node The node definition of adapter
+     * @return ArrayNodeDefinition
      */
-    protected function configAdapterValidation(NodeDefinition $node)
+    protected function getServiceManagerAdapterConfig()
     {
+        $node = static::createNode('service_manager_adapter');
+
         $node
-            ->beforeNormalization()
-            ->always(function ($v) {
-                if (is_string($v)) {
-                    $v = array('service_id' => $v);
-                } elseif (is_array($v)) {
-                    $v = array_merge($v, array(
-                        'service_id' => null,
-                    ));
-                }
-
-                return $v;
-            })
-            ->end()
-            ->validate()
-            ->always(function ($v) use ($node) {
-                if (null !== $v['service_id']) {
-                    $v = $v['service_id'];
-                } else {
-                    unset($v['service_id']);
-                    $fields = array(
-                        'service_manager',
-                        'short_name',
-                        'command_prefix',
-                        'command_description',
-                        'identifier_field',
-                        'identifier_argument',
-                        'identifier_argument_description',
-                    );
-
-                    foreach ($fields as $fieldRequired) {
-                        if (null === $v[$fieldRequired]) {
-                            throw new InvalidConfigurationException(sprintf('The child node "%s" at path "%s" must be configured.', $fieldRequired, $node->getNode()->getPath()));
-                        }
-                    }
-                }
-
-                return $v;
-            })
+            ->children()
+                ->scalarNode('manager_id')->isRequired()->defaultNull()->end()
+                ->scalarNode('short_name')->isRequired()->defaultNull()->end()
+                ->scalarNode('command_prefix')->isRequired()->defaultNull()->end()
+                ->scalarNode('command_description')->cannotBeEmpty()->defaultValue('The "%s" command of <comment>"%s"</comment> class')->end()
+                ->scalarNode('identifier_field')->cannotBeEmpty()->defaultValue('id')->end()
+                ->scalarNode('identifier_argument')->cannotBeEmpty()->defaultValue('identifier')->end()
+                ->scalarNode('identifier_argument_description')->cannotBeEmpty()->defaultValue('The unique identifier of %s')->end()
+                ->scalarNode('display_name_method')->isRequired()->defaultNull()->end()
+                ->scalarNode('new_instance_method')->defaultNull()->end()
+                ->scalarNode('create_method')->defaultNull()->end()
+                ->scalarNode('get_method')->defaultNull()->end()
+                ->scalarNode('update_method')->defaultNull()->end()
+                ->scalarNode('delete_method')->defaultNull()->end()
+                ->scalarNode('undelete_method')->defaultNull()->end()
             ->end()
         ;
+
+        return $node;
     }
 
     /**
@@ -235,7 +202,7 @@ class Configuration implements ConfigurationInterface
     protected static function createNode($name, $type = 'array')
     {
         $treeBuilder = new TreeBuilder();
-        /* @var ArrayNodeDefinition $node */
+        /* @var ArrayNodeDefinition|NodeDefinition $node */
         $node = $treeBuilder->root($name, $type);
 
         return $node;
