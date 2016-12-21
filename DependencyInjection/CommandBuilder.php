@@ -11,6 +11,7 @@
 
 namespace Sonatra\Bundle\DoctrineConsoleBundle\DependencyInjection;
 
+use Sonatra\Component\DoctrineConsole\Adapter\ResourceAdapter;
 use Sonatra\Component\DoctrineConsole\Adapter\ServiceManagerAdapter;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -72,8 +73,10 @@ abstract class CommandBuilder
             $id = $config['adapter_id'];
         } elseif (isset($config['service_manager_adapter'])) {
             $id = self::buildServiceManagerAdapter($container, $config['service_manager_adapter'], $classname);
+        } elseif (isset($config['resource_adapter'])) {
+            $id = self::buildResourceAdapter($container, $config['resource_adapter']);
         } else {
-            throw new InvalidConfigurationException(sprintf('An adapter must be configured on "sonatra_doctrine_console.commands.%s". Available adapters: "%s"', $classname, implode(Configuration::ADAPTERS, '", "')));
+            throw new InvalidConfigurationException(sprintf('An adapter must be configured on "sonatra_doctrine_console.commands.%s". Available adapters: "%s"', $classname, implode(Configuration::getAdapters(), '", "')));
         }
 
         return $id;
@@ -109,6 +112,32 @@ abstract class CommandBuilder
             ->addMethodCall('setUpdateMethod', array($config['update_method']))
             ->addMethodCall('setDeleteMethod', array($config['delete_method']))
             ->addMethodCall('setUndeleteMethod', array($config['undelete_method']))
+        ;
+        $container->setDefinition($id, $def);
+
+        return $id;
+    }
+
+    /**
+     * Build the resource adapter.
+     *
+     * @param ContainerBuilder $container The container builder
+     * @param string|array     $config    The config to build an adapter of resource domain
+     *
+     * @return string The service id of the command adapter
+     */
+    private static function buildResourceAdapter(ContainerBuilder $container, array $config)
+    {
+        $id = self::buildAdapterId($config['command_prefix']);
+        $def = new Definition(ResourceAdapter::class);
+        $def
+            ->addArgument(new Reference($config['resource_id']))
+            ->addMethodCall('setCommandPrefix', array($config['command_prefix']))
+            ->addMethodCall('setCommandDescription', array(str_replace('%s', '{s}', $config['command_description'])))
+            ->addMethodCall('setIdentifierField', array($config['identifier_field']))
+            ->addMethodCall('setIdentifierArgument', array($config['identifier_argument']))
+            ->addMethodCall('setIdentifierArgumentDescription', array(str_replace('%s', '{s}', $config['identifier_argument_description'])))
+            ->addMethodCall('setDisplayNameMethod', array($config['display_name_method']))
         ;
         $container->setDefinition($id, $def);
 

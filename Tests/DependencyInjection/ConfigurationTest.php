@@ -79,6 +79,13 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                             'display_name_method' => 'getName',
                         ),
                     ),
+                    'BazClass' => array(
+                        'resource_adapter' => array(
+                            'resource_id' => 'resource.baz_class',
+                            'command_prefix' => 'model:baz',
+                            'display_name_method' => 'getName',
+                        ),
+                    ),
                 ),
             ),
         );
@@ -135,6 +142,42 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                         'update_method' => null,
                         'delete_method' => null,
                         'undelete_method' => null,
+                    ),
+                    'view' => array(
+                        'enabled' => false,
+                        'field_arguments' => array(),
+                        'field_options' => array(),
+                    ),
+                    'create' => array(
+                        'enabled' => false,
+                        'field_arguments' => array(),
+                        'field_options' => array(),
+                    ),
+                    'update' => array(
+                        'enabled' => false,
+                        'field_arguments' => array(),
+                        'field_options' => array(),
+                    ),
+                    'delete' => array(
+                        'enabled' => false,
+                        'field_arguments' => array(),
+                        'field_options' => array(),
+                    ),
+                    'undelete' => array(
+                        'enabled' => false,
+                        'field_arguments' => array(),
+                        'field_options' => array(),
+                    ),
+                ),
+                'BazClass' => array(
+                    'resource_adapter' => array(
+                        'resource_id' => 'resource.baz_class',
+                        'command_prefix' => 'model:baz',
+                        'command_description' => 'The "%s" command of <comment>"%s"</comment> class',
+                        'identifier_field' => 'id',
+                        'identifier_argument' => 'identifier',
+                        'identifier_argument_description' => 'The unique identifier of %s',
+                        'display_name_method' => 'getName',
                     ),
                     'view' => array(
                         'enabled' => false,

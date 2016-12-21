@@ -24,12 +24,18 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
-     * @var string[]
+     * Get the adapters.
+     *
+     * @return string[]
      */
-    const ADAPTERS = array(
-        'adapter_id',
-        'service_manager_adapter',
-    );
+    public static function getAdapters()
+    {
+        return array(
+            'adapter_id',
+            'service_manager_adapter',
+            'resource_adapter',
+        );
+    }
 
     /**
      * {@inheritdoc}
@@ -62,6 +68,7 @@ class Configuration implements ConfigurationInterface
                 ->children()
                     ->append($this->getAdapterConfig())
                     ->append($this->getServiceManagerAdapterConfig())
+                    ->append($this->getResourceAdapterConfig())
                     ->append($this->createCommand('view'))
                     ->append($this->createCommand('create'))
                     ->append($this->createCommand('update'))
@@ -109,6 +116,30 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('update_method')->defaultNull()->end()
                 ->scalarNode('delete_method')->defaultNull()->end()
                 ->scalarNode('undelete_method')->defaultNull()->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    /**
+     * Get the resource adapter node.
+     *
+     * @return ArrayNodeDefinition
+     */
+    protected function getResourceAdapterConfig()
+    {
+        $node = static::createNode('resource_adapter');
+
+        $node
+            ->children()
+                ->scalarNode('resource_id')->isRequired()->defaultNull()->end()
+                ->scalarNode('command_prefix')->isRequired()->defaultNull()->end()
+                ->scalarNode('command_description')->cannotBeEmpty()->defaultValue('The "%s" command of <comment>"%s"</comment> class')->end()
+                ->scalarNode('identifier_field')->cannotBeEmpty()->defaultValue('id')->end()
+                ->scalarNode('identifier_argument')->cannotBeEmpty()->defaultValue('identifier')->end()
+                ->scalarNode('identifier_argument_description')->cannotBeEmpty()->defaultValue('The unique identifier of %s')->end()
+                ->scalarNode('display_name_method')->isRequired()->defaultNull()->end()
             ->end()
         ;
 
