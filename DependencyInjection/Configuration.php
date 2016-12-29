@@ -133,7 +133,6 @@ class Configuration implements ConfigurationInterface
 
         $node
             ->children()
-                ->scalarNode('resource_id')->isRequired()->defaultNull()->end()
                 ->scalarNode('command_prefix')->isRequired()->defaultNull()->end()
                 ->scalarNode('command_description')->cannotBeEmpty()->defaultValue('The "%s" command of <comment>"%s"</comment> class')->end()
                 ->scalarNode('identifier_field')->cannotBeEmpty()->defaultValue('id')->end()

@@ -81,7 +81,6 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                     ),
                     'BazClass' => array(
                         'resource_adapter' => array(
-                            'resource_id' => 'resource.baz_class',
                             'command_prefix' => 'model:baz',
                             'display_name_method' => 'getName',
                         ),
@@ -171,7 +170,6 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                 ),
                 'BazClass' => array(
                     'resource_adapter' => array(
-                        'resource_id' => 'resource.baz_class',
                         'command_prefix' => 'model:baz',
                         'command_description' => 'The "%s" command of <comment>"%s"</comment> class',
                         'identifier_field' => 'id',

@@ -16,6 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\ExpressionLanguage\Expression;
 
 /**
  * Command Builder Tests.
@@ -189,7 +190,7 @@ class CommandBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(2, $container->getDefinitions());
         $validAdapterDef = new Definition('Sonatra\Component\DoctrineConsole\Adapter\ResourceAdapter');
         $validAdapterDef
-            ->addArgument(new Reference('service_resource_id'))
+            ->addArgument(new Expression('service("sonatra_resource.domain_manager").get("FooClass")'))
             ->addMethodCall('setCommandPrefix', array('command:prefix'))
             ->addMethodCall('setCommandDescription', array('The command description'))
             ->addMethodCall('setIdentifierField', array('id'))

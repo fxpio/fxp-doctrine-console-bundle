@@ -18,6 +18,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\ExpressionLanguage\Expression;
 
 /**
  * Command builder.
@@ -74,7 +75,7 @@ abstract class CommandBuilder
         } elseif (isset($config['service_manager_adapter'])) {
             $id = self::buildServiceManagerAdapter($container, $config['service_manager_adapter'], $classname);
         } elseif (isset($config['resource_adapter'])) {
-            $id = self::buildResourceAdapter($container, $config['resource_adapter']);
+            $id = self::buildResourceAdapter($container, $config['resource_adapter'], $classname);
         } else {
             throw new InvalidConfigurationException(sprintf('An adapter must be configured on "sonatra_doctrine_console.commands.%s". Available adapters: "%s"', $classname, implode(Configuration::getAdapters(), '", "')));
         }
@@ -123,15 +124,16 @@ abstract class CommandBuilder
      *
      * @param ContainerBuilder $container The container builder
      * @param string|array     $config    The config to build an adapter of resource domain
+     * @param string           $classname The class name
      *
      * @return string The service id of the command adapter
      */
-    private static function buildResourceAdapter(ContainerBuilder $container, array $config)
+    private static function buildResourceAdapter(ContainerBuilder $container, array $config, $classname)
     {
         $id = self::buildAdapterId($config['command_prefix']);
         $def = new Definition(ResourceAdapter::class);
         $def
-            ->addArgument(new Reference($config['resource_id']))
+            ->addArgument(new Expression('service("sonatra_resource.domain_manager").get("'.str_replace('\\', '\\\\', $classname).'")'))
             ->addMethodCall('setCommandPrefix', array($config['command_prefix']))
             ->addMethodCall('setCommandDescription', array(str_replace('%s', '{s}', $config['command_description'])))
             ->addMethodCall('setIdentifierField', array($config['identifier_field']))
