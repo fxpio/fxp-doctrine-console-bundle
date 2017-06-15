@@ -11,6 +11,7 @@
 
 namespace Sonatra\Bundle\DoctrineConsoleBundle\Tests\DependencyInjection;
 
+use PHPUnit\Framework\TestCase;
 use Sonatra\Bundle\DoctrineConsoleBundle\DependencyInjection\CommandBuilder;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -23,7 +24,7 @@ use Symfony\Component\ExpressionLanguage\Expression;
  *
  * @author François Pluchino <francois.pluchino@sonatra.com>
  */
-class CommandBuilderTest extends \PHPUnit_Framework_TestCase
+class CommandBuilderTest extends TestCase
 {
     public function testBuildCommandsForServiceAdapter()
     {

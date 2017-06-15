@@ -11,6 +11,7 @@
 
 namespace Sonatra\Bundle\DoctrineConsoleBundle\Tests\DependencyInjection;
 
+use PHPUnit\Framework\TestCase;
 use Sonatra\Bundle\DoctrineConsoleBundle\DependencyInjection\SonatraDoctrineConsoleExtension;
 use Sonatra\Bundle\DoctrineConsoleBundle\SonatraDoctrineConsoleBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -22,7 +23,7 @@ use Symfony\Component\Filesystem\Filesystem;
  *
  * @author François Pluchino <francois.pluchino@sonatra.com>
  */
-class SonatraDoctrineConsoleExtensionTest extends \PHPUnit_Framework_TestCase
+class SonatraDoctrineConsoleExtensionTest extends TestCase
 {
     /**
      * @var string
