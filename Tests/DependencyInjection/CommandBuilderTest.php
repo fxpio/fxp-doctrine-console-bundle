@@ -29,7 +29,7 @@ class CommandBuilderTest extends TestCase
     public function testBuildCommandsForServiceAdapter()
     {
         $container = new ContainerBuilder();
-        $this->assertCount(0, $container->getDefinitions());
+        $this->assertCount(1, $container->getDefinitions());
         $configs = array(
             'FooClass' => array(
                 'adapter_id' => 'service_adapter_id',
@@ -55,7 +55,7 @@ class CommandBuilderTest extends TestCase
 
         CommandBuilder::buildCommands($container, $configs);
 
-        $this->assertCount(1, $container->getDefinitions());
+        $this->assertCount(2, $container->getDefinitions());
         $validCommandDef = new Definition('Sonatra\Component\DoctrineConsole\Command\View');
         $validCommandDef
             ->addArgument(new Reference('sonatra_doctrine_console.console.object_field_helper'))
@@ -65,16 +65,16 @@ class CommandBuilderTest extends TestCase
             ->addTag('console.command')
         ;
 
-        $valid = array(
+        $valid = array_merge($container->getDefinitions(), array(
             'service_adapter_id.view' => $validCommandDef,
-        );
+        ));
         $this->assertEquals($valid, $container->getDefinitions());
     }
 
     public function testBuildCommandsForServiceManagerAdapter()
     {
         $container = new ContainerBuilder();
-        $this->assertCount(0, $container->getDefinitions());
+        $this->assertCount(1, $container->getDefinitions());
         $configs = array(
             'FooClass' => array(
                 'service_manager_adapter' => array(
@@ -115,7 +115,7 @@ class CommandBuilderTest extends TestCase
 
         CommandBuilder::buildCommands($container, $configs);
 
-        $this->assertCount(2, $container->getDefinitions());
+        $this->assertCount(3, $container->getDefinitions());
         $validAdapterDef = new Definition('Sonatra\Component\DoctrineConsole\Adapter\ServiceManagerAdapter');
         $validAdapterDef
             ->addArgument(new Reference('service_manager_id'))
@@ -144,17 +144,17 @@ class CommandBuilderTest extends TestCase
             ->addTag('console.command')
         ;
 
-        $valid = array(
+        $valid = array_merge($container->getDefinitions(), array(
             'sonatra_doctrine_console.command_adapter.command_prefix' => $validAdapterDef,
             'sonatra_doctrine_console.commands.command_prefix.view' => $validCommandDef,
-        );
+        ));
         $this->assertEquals($valid, $container->getDefinitions());
     }
 
     public function testBuildCommandsForServiceResourceAdapter()
     {
         $container = new ContainerBuilder();
-        $this->assertCount(0, $container->getDefinitions());
+        $this->assertCount(1, $container->getDefinitions());
         $configs = array(
             'FooClass' => array(
                 'resource_adapter' => array(
@@ -188,7 +188,7 @@ class CommandBuilderTest extends TestCase
 
         CommandBuilder::buildCommands($container, $configs);
 
-        $this->assertCount(2, $container->getDefinitions());
+        $this->assertCount(3, $container->getDefinitions());
         $validAdapterDef = new Definition('Sonatra\Component\DoctrineConsole\Adapter\ResourceAdapter');
         $validAdapterDef
             ->addArgument(new Expression('service("sonatra_resource.domain_manager").get("FooClass")'))
@@ -208,10 +208,10 @@ class CommandBuilderTest extends TestCase
             ->addTag('console.command')
         ;
 
-        $valid = array(
+        $valid = array_merge($container->getDefinitions(), array(
             'sonatra_doctrine_console.command_adapter.command_prefix' => $validAdapterDef,
             'sonatra_doctrine_console.commands.command_prefix.view' => $validCommandDef,
-        );
+        ));
         $this->assertEquals($valid, $container->getDefinitions());
     }
 
@@ -222,7 +222,7 @@ class CommandBuilderTest extends TestCase
     public function testBuildCommandsWithoutAdapter()
     {
         $container = new ContainerBuilder();
-        $this->assertCount(0, $container->getDefinitions());
+        $this->assertCount(1, $container->getDefinitions());
         $configs = array(
             'FooClass' => array(
                 'view' => array(
