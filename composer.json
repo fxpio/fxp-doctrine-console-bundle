@@ -14,9 +14,9 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=7.0.0",
-        "symfony/framework-bundle": "^3.3.0",
-        "symfony/expression-language": "^3.3.0",
+        "php": "^7.1.0",
+        "symfony/framework-bundle": "^3.4.0|^4.0.0",
+        "symfony/expression-language": "^3.4.0|^4.0.0",
         "sonatra/doctrine-console": "^1.0.0"
     },
     "require-dev": {
