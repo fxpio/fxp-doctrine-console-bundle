@@ -14,23 +14,13 @@ Installation is a quick, 2 step process:
 
 ### Step 1: Download the bundle using composer
 
-Add Sonatra DoctrineConsoleBundle in your composer.json:
-
-```js
-{
-    "require": {
-        "sonatra/doctrine-console-bundle": "~1.0"
-    }
-}
-```
-
-Or tell composer to download the bundle by running the command:
+Tell composer to download the bundle by running the command:
 
 ```bash
-$ php composer.phar require sonatra/doctrine-console-bundle:"~1.0"
+$ composer require fxp/doctrine-console-bundle
 ```
 
-Composer will install the bundle to your project's `vendor/sonatra` directory.
+Composer will install the bundle to your project's `vendor/fxp` directory.
 
 ### Step 2: Enable the bundle
 
@@ -43,7 +33,7 @@ public function registerBundles()
 {
     $bundles = array(
         // ...
-        new Sonatra\Bundle\DoctrineConsoleBundle\SonatraDoctrineConsoleBundle(),
+        new Fxp\Bundle\DoctrineConsoleBundle\FxpDoctrineConsoleBundle(),
     );
 }
 ```
@@ -51,4 +41,4 @@ public function registerBundles()
 ### Next Steps
 
 Now that you have completed the basic installation and configuration of the
-Sonatra DoctrineConsoleBundle.
+Fxp DoctrineConsoleBundle.

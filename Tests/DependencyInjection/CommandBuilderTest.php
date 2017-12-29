@@ -1,18 +1,18 @@
 <?php
 
 /*
- * This file is part of the Sonatra package.
+ * This file is part of the Fxp package.
  *
- * (c) François Pluchino <francois.pluchino@sonatra.com>
+ * (c) François Pluchino <francois.pluchino@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Sonatra\Bundle\DoctrineConsoleBundle\Tests\DependencyInjection;
+namespace Fxp\Bundle\DoctrineConsoleBundle\Tests\DependencyInjection;
 
+use Fxp\Bundle\DoctrineConsoleBundle\DependencyInjection\CommandBuilder;
 use PHPUnit\Framework\TestCase;
-use Sonatra\Bundle\DoctrineConsoleBundle\DependencyInjection\CommandBuilder;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Definition;
@@ -22,7 +22,7 @@ use Symfony\Component\ExpressionLanguage\Expression;
 /**
  * Command Builder Tests.
  *
- * @author François Pluchino <francois.pluchino@sonatra.com>
+ * @author François Pluchino <francois.pluchino@gmail.com>
  */
 class CommandBuilderTest extends TestCase
 {
@@ -56,9 +56,9 @@ class CommandBuilderTest extends TestCase
         CommandBuilder::buildCommands($container, $configs);
 
         $this->assertCount(2, $container->getDefinitions());
-        $validCommandDef = new Definition('Sonatra\Component\DoctrineConsole\Command\View');
+        $validCommandDef = new Definition('Fxp\Component\DoctrineConsole\Command\View');
         $validCommandDef
-            ->addArgument(new Reference('sonatra_doctrine_console.console.object_field_helper'))
+            ->addArgument(new Reference('fxp_doctrine_console.console.object_field_helper'))
             ->addArgument(new Reference('service_adapter_id'))
             ->addArgument(array())
             ->addArgument(array())
@@ -116,7 +116,7 @@ class CommandBuilderTest extends TestCase
         CommandBuilder::buildCommands($container, $configs);
 
         $this->assertCount(3, $container->getDefinitions());
-        $validAdapterDef = new Definition('Sonatra\Component\DoctrineConsole\Adapter\ServiceManagerAdapter');
+        $validAdapterDef = new Definition('Fxp\Component\DoctrineConsole\Adapter\ServiceManagerAdapter');
         $validAdapterDef
             ->addArgument(new Reference('service_manager_id'))
             ->addArgument(new Reference('validator', ContainerInterface::IGNORE_ON_INVALID_REFERENCE))
@@ -135,18 +135,18 @@ class CommandBuilderTest extends TestCase
             ->addMethodCall('setDeleteMethod', array(null))
             ->addMethodCall('setUndeleteMethod', array(null))
         ;
-        $validCommandDef = new Definition('Sonatra\Component\DoctrineConsole\Command\View');
+        $validCommandDef = new Definition('Fxp\Component\DoctrineConsole\Command\View');
         $validCommandDef
-            ->addArgument(new Reference('sonatra_doctrine_console.console.object_field_helper'))
-            ->addArgument(new Reference('sonatra_doctrine_console.command_adapter.command_prefix'))
+            ->addArgument(new Reference('fxp_doctrine_console.console.object_field_helper'))
+            ->addArgument(new Reference('fxp_doctrine_console.command_adapter.command_prefix'))
             ->addArgument(array())
             ->addArgument(array())
             ->addTag('console.command')
         ;
 
         $valid = array_merge($container->getDefinitions(), array(
-            'sonatra_doctrine_console.command_adapter.command_prefix' => $validAdapterDef,
-            'sonatra_doctrine_console.commands.command_prefix.view' => $validCommandDef,
+            'fxp_doctrine_console.command_adapter.command_prefix' => $validAdapterDef,
+            'fxp_doctrine_console.commands.command_prefix.view' => $validCommandDef,
         ));
         $this->assertEquals($valid, $container->getDefinitions());
     }
@@ -189,9 +189,9 @@ class CommandBuilderTest extends TestCase
         CommandBuilder::buildCommands($container, $configs);
 
         $this->assertCount(3, $container->getDefinitions());
-        $validAdapterDef = new Definition('Sonatra\Component\DoctrineConsole\Adapter\ResourceAdapter');
+        $validAdapterDef = new Definition('Fxp\Component\DoctrineConsole\Adapter\ResourceAdapter');
         $validAdapterDef
-            ->addArgument(new Expression('service("sonatra_resource.domain_manager").get("FooClass")'))
+            ->addArgument(new Expression('service("fxp_resource.domain_manager").get("FooClass")'))
             ->addMethodCall('setCommandPrefix', array('command:prefix'))
             ->addMethodCall('setCommandDescription', array('The command description'))
             ->addMethodCall('setIdentifierField', array('id'))
@@ -199,25 +199,25 @@ class CommandBuilderTest extends TestCase
             ->addMethodCall('setIdentifierArgumentDescription', array('The description of identifier argument of {s}'))
             ->addMethodCall('setDisplayNameMethod', array('getId'))
         ;
-        $validCommandDef = new Definition('Sonatra\Component\DoctrineConsole\Command\View');
+        $validCommandDef = new Definition('Fxp\Component\DoctrineConsole\Command\View');
         $validCommandDef
-            ->addArgument(new Reference('sonatra_doctrine_console.console.object_field_helper'))
-            ->addArgument(new Reference('sonatra_doctrine_console.command_adapter.command_prefix'))
+            ->addArgument(new Reference('fxp_doctrine_console.console.object_field_helper'))
+            ->addArgument(new Reference('fxp_doctrine_console.command_adapter.command_prefix'))
             ->addArgument(array())
             ->addArgument(array())
             ->addTag('console.command')
         ;
 
         $valid = array_merge($container->getDefinitions(), array(
-            'sonatra_doctrine_console.command_adapter.command_prefix' => $validAdapterDef,
-            'sonatra_doctrine_console.commands.command_prefix.view' => $validCommandDef,
+            'fxp_doctrine_console.command_adapter.command_prefix' => $validAdapterDef,
+            'fxp_doctrine_console.commands.command_prefix.view' => $validCommandDef,
         ));
         $this->assertEquals($valid, $container->getDefinitions());
     }
 
     /**
      * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     * @expectedExceptionMessage An adapter must be configured on "sonatra_doctrine_console.commands.FooClass". Available adapters: "adapter_id", "service_manager_adapter"
+     * @expectedExceptionMessage An adapter must be configured on "fxp_doctrine_console.commands.FooClass". Available adapters: "adapter_id", "service_manager_adapter"
      */
     public function testBuildCommandsWithoutAdapter()
     {

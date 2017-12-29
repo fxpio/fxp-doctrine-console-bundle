@@ -1,18 +1,18 @@
 <?php
 
 /*
- * This file is part of the Sonatra package.
+ * This file is part of the Fxp package.
  *
- * (c) François Pluchino <francois.pluchino@sonatra.com>
+ * (c) François Pluchino <francois.pluchino@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Sonatra\Bundle\DoctrineConsoleBundle\DependencyInjection;
+namespace Fxp\Bundle\DoctrineConsoleBundle\DependencyInjection;
 
-use Sonatra\Component\DoctrineConsole\Adapter\ResourceAdapter;
-use Sonatra\Component\DoctrineConsole\Adapter\ServiceManagerAdapter;
+use Fxp\Component\DoctrineConsole\Adapter\ResourceAdapter;
+use Fxp\Component\DoctrineConsole\Adapter\ServiceManagerAdapter;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -23,7 +23,7 @@ use Symfony\Component\ExpressionLanguage\Expression;
 /**
  * Command builder.
  *
- * @author François Pluchino <francois.pluchino@sonatra.com>
+ * @author François Pluchino <francois.pluchino@gmail.com>
  */
 abstract class CommandBuilder
 {
@@ -31,11 +31,11 @@ abstract class CommandBuilder
      * @var array
      */
     private static $commands = array(
-        'view' => 'Sonatra\Component\DoctrineConsole\Command\View',
-        'create' => 'Sonatra\Component\DoctrineConsole\Command\Create',
-        'update' => 'Sonatra\Component\DoctrineConsole\Command\Update',
-        'delete' => 'Sonatra\Component\DoctrineConsole\Command\Delete',
-        'undelete' => 'Sonatra\Component\DoctrineConsole\Command\Undelete',
+        'view' => 'Fxp\Component\DoctrineConsole\Command\View',
+        'create' => 'Fxp\Component\DoctrineConsole\Command\Create',
+        'update' => 'Fxp\Component\DoctrineConsole\Command\Update',
+        'delete' => 'Fxp\Component\DoctrineConsole\Command\Delete',
+        'undelete' => 'Fxp\Component\DoctrineConsole\Command\Undelete',
     );
 
     /**
@@ -77,7 +77,7 @@ abstract class CommandBuilder
         } elseif (isset($config['resource_adapter'])) {
             $id = self::buildResourceAdapter($container, $config['resource_adapter'], $classname);
         } else {
-            throw new InvalidConfigurationException(sprintf('An adapter must be configured on "sonatra_doctrine_console.commands.%s". Available adapters: "%s"', $classname, implode(Configuration::getAdapters(), '", "')));
+            throw new InvalidConfigurationException(sprintf('An adapter must be configured on "fxp_doctrine_console.commands.%s". Available adapters: "%s"', $classname, implode(Configuration::getAdapters(), '", "')));
         }
 
         return $id;
@@ -133,7 +133,7 @@ abstract class CommandBuilder
         $id = self::buildAdapterId($config['command_prefix']);
         $def = new Definition(ResourceAdapter::class);
         $def
-            ->addArgument(new Expression('service("sonatra_resource.domain_manager").get("'.str_replace('\\', '\\\\', $classname).'")'))
+            ->addArgument(new Expression('service("fxp_resource.domain_manager").get("'.str_replace('\\', '\\\\', $classname).'")'))
             ->addMethodCall('setCommandPrefix', array($config['command_prefix']))
             ->addMethodCall('setCommandDescription', array(str_replace('%s', '{s}', $config['command_description'])))
             ->addMethodCall('setIdentifierField', array($config['identifier_field']))
@@ -160,7 +160,7 @@ abstract class CommandBuilder
         $id = str_replace('command_adapter', 'commands', $adapterId).'.'.$command;
         $def = new Definition(self::$commands[$command]);
         $def
-            ->addArgument(new Reference('sonatra_doctrine_console.console.object_field_helper'))
+            ->addArgument(new Reference('fxp_doctrine_console.console.object_field_helper'))
             ->addArgument(new Reference($adapterId))
             ->addArgument($arguments)
             ->addArgument($options)
@@ -179,7 +179,7 @@ abstract class CommandBuilder
      */
     private static function buildAdapterId($commandPrefix)
     {
-        return 'sonatra_doctrine_console.command_adapter.'
+        return 'fxp_doctrine_console.command_adapter.'
         .str_replace(array(':', '-'), '_', $commandPrefix);
     }
 }

@@ -1,14 +1,14 @@
 {
-    "name": "sonatra/doctrine-console-bundle",
+    "name": "fxp/doctrine-console-bundle",
     "type": "symfony-bundle",
     "description": "Helper for display and manage the doctrine object in console",
     "keywords": ["doctrine", "console", "helper", "object", "entity", "command", "manipulation"],
-    "homepage": "https://github.com/sonatra/sonatra-doctrine-console-bundle",
+    "homepage": "https://github.com/fxpio/fxp-doctrine-console-bundle",
     "license": "MIT",
     "authors": [
         {
             "name": "François Pluchino",
-            "email": "francois.pluchino@sonatra.com"
+            "email": "francois.pluchino@gmail.com"
         }
     ],
     "minimum-stability": "dev",
@@ -17,14 +17,14 @@
         "php": "^7.1.0",
         "symfony/framework-bundle": "^3.4.0|^4.0.0",
         "symfony/expression-language": "^3.4.0|^4.0.0",
-        "sonatra/doctrine-console": "^1.0.0"
+        "fxp/doctrine-console": "^1.0.0"
     },
     "require-dev": {
-        "sonatra/default-value-bundle": "^1.0.0",
-        "sonatra/resource-bundle": "^1.0.0"
+        "fxp/default-value-bundle": "^1.0.0",
+        "fxp/resource-bundle": "^1.0.0"
     },
     "autoload": {
-        "psr-4": { "Sonatra\\Bundle\\DoctrineConsoleBundle\\": "" },
+        "psr-4": { "Fxp\\Bundle\\DoctrineConsoleBundle\\": "" },
         "exclude-from-classmap": [
             "/Tests/"
         ]

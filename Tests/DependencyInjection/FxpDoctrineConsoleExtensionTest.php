@@ -1,19 +1,19 @@
 <?php
 
 /*
- * This file is part of the Sonatra package.
+ * This file is part of the Fxp package.
  *
- * (c) François Pluchino <francois.pluchino@sonatra.com>
+ * (c) François Pluchino <francois.pluchino@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Sonatra\Bundle\DoctrineConsoleBundle\Tests\DependencyInjection;
+namespace Fxp\Bundle\DoctrineConsoleBundle\Tests\DependencyInjection;
 
+use Fxp\Bundle\DoctrineConsoleBundle\DependencyInjection\FxpDoctrineConsoleExtension;
+use Fxp\Bundle\DoctrineConsoleBundle\FxpDoctrineConsoleBundle;
 use PHPUnit\Framework\TestCase;
-use Sonatra\Bundle\DoctrineConsoleBundle\DependencyInjection\SonatraDoctrineConsoleExtension;
-use Sonatra\Bundle\DoctrineConsoleBundle\SonatraDoctrineConsoleBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\Component\Filesystem\Filesystem;
@@ -21,9 +21,9 @@ use Symfony\Component\Filesystem\Filesystem;
 /**
  * Bundle Extension Tests.
  *
- * @author François Pluchino <francois.pluchino@sonatra.com>
+ * @author François Pluchino <francois.pluchino@gmail.com>
  */
-class SonatraDoctrineConsoleExtensionTest extends TestCase
+class FxpDoctrineConsoleExtensionTest extends TestCase
 {
     /**
      * @var string
@@ -32,7 +32,7 @@ class SonatraDoctrineConsoleExtensionTest extends TestCase
 
     protected function setUp()
     {
-        $this->cacheDir = sys_get_temp_dir().'/sonatra_doctrine_console_tests';
+        $this->cacheDir = sys_get_temp_dir().'/fxp_doctrine_console_tests';
     }
 
     protected function tearDown()
@@ -44,7 +44,7 @@ class SonatraDoctrineConsoleExtensionTest extends TestCase
     public function testCompileContainerWithExtension()
     {
         $container = $this->getContainer();
-        $this->assertTrue($container->hasDefinition('sonatra_doctrine_console.console.object_field_helper'));
+        $this->assertTrue($container->hasDefinition('fxp_doctrine_console.console.object_field_helper'));
     }
 
     /**
@@ -66,10 +66,10 @@ class SonatraDoctrineConsoleExtensionTest extends TestCase
             'locale' => 'en',
         )));
 
-        $bundle = new SonatraDoctrineConsoleBundle();
+        $bundle = new FxpDoctrineConsoleBundle();
         $bundle->build($container); // Attach all default factories
 
-        $extension = new SonatraDoctrineConsoleExtension();
+        $extension = new FxpDoctrineConsoleExtension();
         $container->registerExtension($extension);
         $config = array();
         $extension->load(array($config), $container);
