@@ -30,13 +30,13 @@ abstract class CommandBuilder
     /**
      * @var array
      */
-    private static $commands = array(
+    private static $commands = [
         'view' => 'Fxp\Component\DoctrineConsole\Command\View',
         'create' => 'Fxp\Component\DoctrineConsole\Command\Create',
         'update' => 'Fxp\Component\DoctrineConsole\Command\Update',
         'delete' => 'Fxp\Component\DoctrineConsole\Command\Delete',
         'undelete' => 'Fxp\Component\DoctrineConsole\Command\Undelete',
-    );
+    ];
 
     /**
      * Build the commands.
@@ -99,20 +99,20 @@ abstract class CommandBuilder
         $def
             ->addArgument(new Reference($config['manager_id']))
             ->addArgument(new Reference('validator', ContainerInterface::IGNORE_ON_INVALID_REFERENCE))
-            ->addMethodCall('setClass', array($classname))
-            ->addMethodCall('setShortName', array($config['short_name']))
-            ->addMethodCall('setCommandPrefix', array($config['command_prefix']))
-            ->addMethodCall('setCommandDescription', array(str_replace('%s', '{s}', $config['command_description'])))
-            ->addMethodCall('setIdentifierField', array($config['identifier_field']))
-            ->addMethodCall('setIdentifierArgument', array($config['identifier_argument']))
-            ->addMethodCall('setIdentifierArgumentDescription', array(str_replace('%s', '{s}', $config['identifier_argument_description'])))
-            ->addMethodCall('setDisplayNameMethod', array($config['display_name_method']))
-            ->addMethodCall('setNewInstanceMethod', array($config['new_instance_method']))
-            ->addMethodCall('setCreateMethod', array($config['create_method']))
-            ->addMethodCall('setGetMethod', array($config['get_method']))
-            ->addMethodCall('setUpdateMethod', array($config['update_method']))
-            ->addMethodCall('setDeleteMethod', array($config['delete_method']))
-            ->addMethodCall('setUndeleteMethod', array($config['undelete_method']))
+            ->addMethodCall('setClass', [$classname])
+            ->addMethodCall('setShortName', [$config['short_name']])
+            ->addMethodCall('setCommandPrefix', [$config['command_prefix']])
+            ->addMethodCall('setCommandDescription', [str_replace('%s', '{s}', $config['command_description'])])
+            ->addMethodCall('setIdentifierField', [$config['identifier_field']])
+            ->addMethodCall('setIdentifierArgument', [$config['identifier_argument']])
+            ->addMethodCall('setIdentifierArgumentDescription', [str_replace('%s', '{s}', $config['identifier_argument_description'])])
+            ->addMethodCall('setDisplayNameMethod', [$config['display_name_method']])
+            ->addMethodCall('setNewInstanceMethod', [$config['new_instance_method']])
+            ->addMethodCall('setCreateMethod', [$config['create_method']])
+            ->addMethodCall('setGetMethod', [$config['get_method']])
+            ->addMethodCall('setUpdateMethod', [$config['update_method']])
+            ->addMethodCall('setDeleteMethod', [$config['delete_method']])
+            ->addMethodCall('setUndeleteMethod', [$config['undelete_method']])
         ;
         $container->setDefinition($id, $def);
 
@@ -134,12 +134,12 @@ abstract class CommandBuilder
         $def = new Definition(ResourceAdapter::class);
         $def
             ->addArgument(new Expression('service("fxp_resource.domain_manager").get("'.str_replace('\\', '\\\\', $classname).'")'))
-            ->addMethodCall('setCommandPrefix', array($config['command_prefix']))
-            ->addMethodCall('setCommandDescription', array(str_replace('%s', '{s}', $config['command_description'])))
-            ->addMethodCall('setIdentifierField', array($config['identifier_field']))
-            ->addMethodCall('setIdentifierArgument', array($config['identifier_argument']))
-            ->addMethodCall('setIdentifierArgumentDescription', array(str_replace('%s', '{s}', $config['identifier_argument_description'])))
-            ->addMethodCall('setDisplayNameMethod', array($config['display_name_method']))
+            ->addMethodCall('setCommandPrefix', [$config['command_prefix']])
+            ->addMethodCall('setCommandDescription', [str_replace('%s', '{s}', $config['command_description'])])
+            ->addMethodCall('setIdentifierField', [$config['identifier_field']])
+            ->addMethodCall('setIdentifierArgument', [$config['identifier_argument']])
+            ->addMethodCall('setIdentifierArgumentDescription', [str_replace('%s', '{s}', $config['identifier_argument_description'])])
+            ->addMethodCall('setDisplayNameMethod', [$config['display_name_method']])
         ;
         $container->setDefinition($id, $def);
 
@@ -155,7 +155,7 @@ abstract class CommandBuilder
      * @param array            $arguments The configs of command arguments
      * @param array            $options   The configs of command options
      */
-    private static function buildCommand(ContainerBuilder $container, $command, $adapterId, array $arguments = array(), array $options = array())
+    private static function buildCommand(ContainerBuilder $container, $command, $adapterId, array $arguments = [], array $options = [])
     {
         $id = str_replace('command_adapter', 'commands', $adapterId).'.'.$command;
         $def = new Definition(self::$commands[$command]);
@@ -180,6 +180,6 @@ abstract class CommandBuilder
     private static function buildAdapterId($commandPrefix)
     {
         return 'fxp_doctrine_console.command_adapter.'
-        .str_replace(array(':', '-'), '_', $commandPrefix);
+        .str_replace([':', '-'], '_', $commandPrefix);
     }
 }

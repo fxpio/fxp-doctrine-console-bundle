@@ -30,28 +30,28 @@ class CommandBuilderTest extends TestCase
     {
         $container = new ContainerBuilder();
         $this->assertCount(1, $container->getDefinitions());
-        $configs = array(
-            'FooClass' => array(
+        $configs = [
+            'FooClass' => [
                 'adapter_id' => 'service_adapter_id',
-                'view' => array(
+                'view' => [
                     'enabled' => true,
-                    'field_arguments' => array(),
-                    'field_options' => array(),
-                ),
-                'create' => array(
+                    'field_arguments' => [],
+                    'field_options' => [],
+                ],
+                'create' => [
                     'enabled' => false,
-                ),
-                'update' => array(
+                ],
+                'update' => [
                     'enabled' => false,
-                ),
-                'delete' => array(
+                ],
+                'delete' => [
                     'enabled' => false,
-                ),
-                'undelete' => array(
+                ],
+                'undelete' => [
                     'enabled' => false,
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
         CommandBuilder::buildCommands($container, $configs);
 
@@ -60,14 +60,14 @@ class CommandBuilderTest extends TestCase
         $validCommandDef
             ->addArgument(new Reference('fxp_doctrine_console.console.object_field_helper'))
             ->addArgument(new Reference('service_adapter_id'))
-            ->addArgument(array())
-            ->addArgument(array())
+            ->addArgument([])
+            ->addArgument([])
             ->addTag('console.command')
         ;
 
-        $valid = array_merge($container->getDefinitions(), array(
+        $valid = array_merge($container->getDefinitions(), [
             'service_adapter_id.view' => $validCommandDef,
-        ));
+        ]);
         $this->assertEquals($valid, $container->getDefinitions());
     }
 
@@ -75,9 +75,9 @@ class CommandBuilderTest extends TestCase
     {
         $container = new ContainerBuilder();
         $this->assertCount(1, $container->getDefinitions());
-        $configs = array(
-            'FooClass' => array(
-                'service_manager_adapter' => array(
+        $configs = [
+            'FooClass' => [
+                'service_manager_adapter' => [
                     'manager_id' => 'service_manager_id',
                     'command_prefix' => 'command:prefix',
                     'short_name' => 'Short Name',
@@ -92,26 +92,26 @@ class CommandBuilderTest extends TestCase
                     'update_method' => null,
                     'delete_method' => null,
                     'undelete_method' => null,
-                ),
-                'view' => array(
+                ],
+                'view' => [
                     'enabled' => true,
-                    'field_arguments' => array(),
-                    'field_options' => array(),
-                ),
-                'create' => array(
+                    'field_arguments' => [],
+                    'field_options' => [],
+                ],
+                'create' => [
                     'enabled' => false,
-                ),
-                'update' => array(
+                ],
+                'update' => [
                     'enabled' => false,
-                ),
-                'delete' => array(
+                ],
+                'delete' => [
                     'enabled' => false,
-                ),
-                'undelete' => array(
+                ],
+                'undelete' => [
                     'enabled' => false,
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
         CommandBuilder::buildCommands($container, $configs);
 
@@ -120,34 +120,34 @@ class CommandBuilderTest extends TestCase
         $validAdapterDef
             ->addArgument(new Reference('service_manager_id'))
             ->addArgument(new Reference('validator', ContainerInterface::IGNORE_ON_INVALID_REFERENCE))
-            ->addMethodCall('setClass', array('FooClass'))
-            ->addMethodCall('setShortName', array('Short Name'))
-            ->addMethodCall('setCommandPrefix', array('command:prefix'))
-            ->addMethodCall('setCommandDescription', array('The command description'))
-            ->addMethodCall('setIdentifierField', array('id'))
-            ->addMethodCall('setIdentifierArgument', array('identifier'))
-            ->addMethodCall('setIdentifierArgumentDescription', array('The description of identifier argument of {s}'))
-            ->addMethodCall('setDisplayNameMethod', array('getId'))
-            ->addMethodCall('setNewInstanceMethod', array(null))
-            ->addMethodCall('setCreateMethod', array(null))
-            ->addMethodCall('setGetMethod', array(null))
-            ->addMethodCall('setUpdateMethod', array(null))
-            ->addMethodCall('setDeleteMethod', array(null))
-            ->addMethodCall('setUndeleteMethod', array(null))
+            ->addMethodCall('setClass', ['FooClass'])
+            ->addMethodCall('setShortName', ['Short Name'])
+            ->addMethodCall('setCommandPrefix', ['command:prefix'])
+            ->addMethodCall('setCommandDescription', ['The command description'])
+            ->addMethodCall('setIdentifierField', ['id'])
+            ->addMethodCall('setIdentifierArgument', ['identifier'])
+            ->addMethodCall('setIdentifierArgumentDescription', ['The description of identifier argument of {s}'])
+            ->addMethodCall('setDisplayNameMethod', ['getId'])
+            ->addMethodCall('setNewInstanceMethod', [null])
+            ->addMethodCall('setCreateMethod', [null])
+            ->addMethodCall('setGetMethod', [null])
+            ->addMethodCall('setUpdateMethod', [null])
+            ->addMethodCall('setDeleteMethod', [null])
+            ->addMethodCall('setUndeleteMethod', [null])
         ;
         $validCommandDef = new Definition('Fxp\Component\DoctrineConsole\Command\View');
         $validCommandDef
             ->addArgument(new Reference('fxp_doctrine_console.console.object_field_helper'))
             ->addArgument(new Reference('fxp_doctrine_console.command_adapter.command_prefix'))
-            ->addArgument(array())
-            ->addArgument(array())
+            ->addArgument([])
+            ->addArgument([])
             ->addTag('console.command')
         ;
 
-        $valid = array_merge($container->getDefinitions(), array(
+        $valid = array_merge($container->getDefinitions(), [
             'fxp_doctrine_console.command_adapter.command_prefix' => $validAdapterDef,
             'fxp_doctrine_console.commands.command_prefix.view' => $validCommandDef,
-        ));
+        ]);
         $this->assertEquals($valid, $container->getDefinitions());
     }
 
@@ -155,9 +155,9 @@ class CommandBuilderTest extends TestCase
     {
         $container = new ContainerBuilder();
         $this->assertCount(1, $container->getDefinitions());
-        $configs = array(
-            'FooClass' => array(
-                'resource_adapter' => array(
+        $configs = [
+            'FooClass' => [
+                'resource_adapter' => [
                     'resource_id' => 'service_resource_id',
                     'command_prefix' => 'command:prefix',
                     'command_description' => 'The command description',
@@ -165,26 +165,26 @@ class CommandBuilderTest extends TestCase
                     'identifier_argument' => 'identifier',
                     'identifier_argument_description' => 'The description of identifier argument of %s',
                     'display_name_method' => 'getId',
-                ),
-                'view' => array(
+                ],
+                'view' => [
                     'enabled' => true,
-                    'field_arguments' => array(),
-                    'field_options' => array(),
-                ),
-                'create' => array(
+                    'field_arguments' => [],
+                    'field_options' => [],
+                ],
+                'create' => [
                     'enabled' => false,
-                ),
-                'update' => array(
+                ],
+                'update' => [
                     'enabled' => false,
-                ),
-                'delete' => array(
+                ],
+                'delete' => [
                     'enabled' => false,
-                ),
-                'undelete' => array(
+                ],
+                'undelete' => [
                     'enabled' => false,
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
         CommandBuilder::buildCommands($container, $configs);
 
@@ -192,26 +192,26 @@ class CommandBuilderTest extends TestCase
         $validAdapterDef = new Definition('Fxp\Component\DoctrineConsole\Adapter\ResourceAdapter');
         $validAdapterDef
             ->addArgument(new Expression('service("fxp_resource.domain_manager").get("FooClass")'))
-            ->addMethodCall('setCommandPrefix', array('command:prefix'))
-            ->addMethodCall('setCommandDescription', array('The command description'))
-            ->addMethodCall('setIdentifierField', array('id'))
-            ->addMethodCall('setIdentifierArgument', array('identifier'))
-            ->addMethodCall('setIdentifierArgumentDescription', array('The description of identifier argument of {s}'))
-            ->addMethodCall('setDisplayNameMethod', array('getId'))
+            ->addMethodCall('setCommandPrefix', ['command:prefix'])
+            ->addMethodCall('setCommandDescription', ['The command description'])
+            ->addMethodCall('setIdentifierField', ['id'])
+            ->addMethodCall('setIdentifierArgument', ['identifier'])
+            ->addMethodCall('setIdentifierArgumentDescription', ['The description of identifier argument of {s}'])
+            ->addMethodCall('setDisplayNameMethod', ['getId'])
         ;
         $validCommandDef = new Definition('Fxp\Component\DoctrineConsole\Command\View');
         $validCommandDef
             ->addArgument(new Reference('fxp_doctrine_console.console.object_field_helper'))
             ->addArgument(new Reference('fxp_doctrine_console.command_adapter.command_prefix'))
-            ->addArgument(array())
-            ->addArgument(array())
+            ->addArgument([])
+            ->addArgument([])
             ->addTag('console.command')
         ;
 
-        $valid = array_merge($container->getDefinitions(), array(
+        $valid = array_merge($container->getDefinitions(), [
             'fxp_doctrine_console.command_adapter.command_prefix' => $validAdapterDef,
             'fxp_doctrine_console.commands.command_prefix.view' => $validCommandDef,
-        ));
+        ]);
         $this->assertEquals($valid, $container->getDefinitions());
     }
 
@@ -223,27 +223,27 @@ class CommandBuilderTest extends TestCase
     {
         $container = new ContainerBuilder();
         $this->assertCount(1, $container->getDefinitions());
-        $configs = array(
-            'FooClass' => array(
-                'view' => array(
+        $configs = [
+            'FooClass' => [
+                'view' => [
                     'enabled' => true,
-                    'field_arguments' => array(),
-                    'field_options' => array(),
-                ),
-                'create' => array(
+                    'field_arguments' => [],
+                    'field_options' => [],
+                ],
+                'create' => [
                     'enabled' => false,
-                ),
-                'update' => array(
+                ],
+                'update' => [
                     'enabled' => false,
-                ),
-                'delete' => array(
+                ],
+                'delete' => [
                     'enabled' => false,
-                ),
-                'undelete' => array(
+                ],
+                'undelete' => [
                     'enabled' => false,
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
         CommandBuilder::buildCommands($container, $configs);
     }

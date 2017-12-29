@@ -54,7 +54,7 @@ class FxpDoctrineConsoleExtensionTest extends TestCase
      */
     protected function getContainer()
     {
-        $container = new ContainerBuilder(new ParameterBag(array(
+        $container = new ContainerBuilder(new ParameterBag([
             'kernel.cache_dir' => $this->cacheDir,
             'kernel.debug' => false,
             'kernel.environment' => 'test',
@@ -62,20 +62,20 @@ class FxpDoctrineConsoleExtensionTest extends TestCase
             'kernel.root_dir' => __DIR__,
             'kernel.charset' => 'UTF-8',
             'assetic.debug' => false,
-            'kernel.bundles' => array(),
+            'kernel.bundles' => [],
             'locale' => 'en',
-        )));
+        ]));
 
         $bundle = new FxpDoctrineConsoleBundle();
         $bundle->build($container); // Attach all default factories
 
         $extension = new FxpDoctrineConsoleExtension();
         $container->registerExtension($extension);
-        $config = array();
-        $extension->load(array($config), $container);
+        $config = [];
+        $extension->load([$config], $container);
 
-        $container->getCompilerPassConfig()->setOptimizationPasses(array());
-        $container->getCompilerPassConfig()->setRemovingPasses(array());
+        $container->getCompilerPassConfig()->setOptimizationPasses([]);
+        $container->getCompilerPassConfig()->setRemovingPasses([]);
         $container->compile();
 
         return $container;

@@ -30,11 +30,11 @@ class Configuration implements ConfigurationInterface
      */
     public static function getAdapters()
     {
-        return array(
+        return [
             'adapter_id',
             'service_manager_adapter',
             'resource_adapter',
-        );
+        ];
     }
 
     /**
@@ -208,7 +208,7 @@ class Configuration implements ConfigurationInterface
                         ->beforeNormalization()
                         ->ifString()
                             ->then(function ($v) {
-                                return array($v);
+                                return [$v];
                             })
                         ->end()
                     ->end()

@@ -25,10 +25,10 @@ class ConfigurationTest extends TestCase
     public function testEmptyConfiguration()
     {
         $process = new Processor();
-        $configs = array();
-        $validConfig = array(
-            'commands' => array(),
-        );
+        $configs = [];
+        $validConfig = [
+            'commands' => [],
+        ];
 
         $config = new Configuration();
         $res = $process->process($config->getConfigTreeBuilder()->buildTree(), $configs);
@@ -42,15 +42,15 @@ class ConfigurationTest extends TestCase
     public function testConfigurationWithMissingRequireFieldForAdapterConfig()
     {
         $process = new Processor();
-        $configs = array(
-            'root' => array(
-                'commands' => array(
-                    'FooClass' => array(
-                        'service_manager_adapter' => array(),
-                    ),
-                ),
-            ),
-        );
+        $configs = [
+            'root' => [
+                'commands' => [
+                    'FooClass' => [
+                        'service_manager_adapter' => [],
+                    ],
+                ],
+            ],
+        ];
 
         $config = new Configuration();
         $process->process($config->getConfigTreeBuilder()->buildTree(), $configs);
@@ -59,75 +59,75 @@ class ConfigurationTest extends TestCase
     public function testConfiguration()
     {
         $process = new Processor();
-        $configs = array(
-            'root' => array(
-                'commands' => array(
-                    'FooClass' => array(
+        $configs = [
+            'root' => [
+                'commands' => [
+                    'FooClass' => [
                         'adapter_id' => 'adapter_service.foo_class',
-                        'create' => array(
-                            'field_options' => array(
-                                'test' => array(
+                        'create' => [
+                            'field_options' => [
+                                'test' => [
                                     'shortcut' => '--A',
-                                ),
-                            ),
-                        ),
-                    ),
-                    'BarClass' => array(
-                        'service_manager_adapter' => array(
+                                ],
+                            ],
+                        ],
+                    ],
+                    'BarClass' => [
+                        'service_manager_adapter' => [
                             'manager_id' => 'manager_service.bar_class',
                             'short_name' => 'Short Name',
                             'command_prefix' => 'model:bar',
                             'display_name_method' => 'getName',
-                        ),
-                    ),
-                    'BazClass' => array(
-                        'resource_adapter' => array(
+                        ],
+                    ],
+                    'BazClass' => [
+                        'resource_adapter' => [
                             'command_prefix' => 'model:baz',
                             'display_name_method' => 'getName',
-                        ),
-                    ),
-                ),
-            ),
-        );
-        $validConfig = array(
-            'commands' => array(
-                'FooClass' => array(
+                        ],
+                    ],
+                ],
+            ],
+        ];
+        $validConfig = [
+            'commands' => [
+                'FooClass' => [
                     'adapter_id' => 'adapter_service.foo_class',
-                    'view' => array(
+                    'view' => [
                         'enabled' => false,
-                        'field_arguments' => array(),
-                        'field_options' => array(),
-                    ),
-                    'create' => array(
+                        'field_arguments' => [],
+                        'field_options' => [],
+                    ],
+                    'create' => [
                         'enabled' => true,
-                        'field_arguments' => array(),
-                        'field_options' => array(
-                            'test' => array(
-                                'shortcut' => array('--A'),
+                        'field_arguments' => [],
+                        'field_options' => [
+                            'test' => [
+                                'shortcut' => ['--A'],
                                 'mode' => null,
                                 'description' => '',
                                 'default' => null,
-                            ),
-                        ),
-                    ),
-                    'update' => array(
+                            ],
+                        ],
+                    ],
+                    'update' => [
                         'enabled' => false,
-                        'field_arguments' => array(),
-                        'field_options' => array(),
-                    ),
-                    'delete' => array(
+                        'field_arguments' => [],
+                        'field_options' => [],
+                    ],
+                    'delete' => [
                         'enabled' => false,
-                        'field_arguments' => array(),
-                        'field_options' => array(),
-                    ),
-                    'undelete' => array(
+                        'field_arguments' => [],
+                        'field_options' => [],
+                    ],
+                    'undelete' => [
                         'enabled' => false,
-                        'field_arguments' => array(),
-                        'field_options' => array(),
-                    ),
-                ),
-                'BarClass' => array(
-                    'service_manager_adapter' => array(
+                        'field_arguments' => [],
+                        'field_options' => [],
+                    ],
+                ],
+                'BarClass' => [
+                    'service_manager_adapter' => [
                         'manager_id' => 'manager_service.bar_class',
                         'short_name' => 'Short Name',
                         'command_prefix' => 'model:bar',
@@ -142,70 +142,70 @@ class ConfigurationTest extends TestCase
                         'update_method' => null,
                         'delete_method' => null,
                         'undelete_method' => null,
-                    ),
-                    'view' => array(
+                    ],
+                    'view' => [
                         'enabled' => false,
-                        'field_arguments' => array(),
-                        'field_options' => array(),
-                    ),
-                    'create' => array(
+                        'field_arguments' => [],
+                        'field_options' => [],
+                    ],
+                    'create' => [
                         'enabled' => false,
-                        'field_arguments' => array(),
-                        'field_options' => array(),
-                    ),
-                    'update' => array(
+                        'field_arguments' => [],
+                        'field_options' => [],
+                    ],
+                    'update' => [
                         'enabled' => false,
-                        'field_arguments' => array(),
-                        'field_options' => array(),
-                    ),
-                    'delete' => array(
+                        'field_arguments' => [],
+                        'field_options' => [],
+                    ],
+                    'delete' => [
                         'enabled' => false,
-                        'field_arguments' => array(),
-                        'field_options' => array(),
-                    ),
-                    'undelete' => array(
+                        'field_arguments' => [],
+                        'field_options' => [],
+                    ],
+                    'undelete' => [
                         'enabled' => false,
-                        'field_arguments' => array(),
-                        'field_options' => array(),
-                    ),
-                ),
-                'BazClass' => array(
-                    'resource_adapter' => array(
+                        'field_arguments' => [],
+                        'field_options' => [],
+                    ],
+                ],
+                'BazClass' => [
+                    'resource_adapter' => [
                         'command_prefix' => 'model:baz',
                         'command_description' => 'The "%s" command of <comment>"%s"</comment> class',
                         'identifier_field' => 'id',
                         'identifier_argument' => 'identifier',
                         'identifier_argument_description' => 'The unique identifier of %s',
                         'display_name_method' => 'getName',
-                    ),
-                    'view' => array(
+                    ],
+                    'view' => [
                         'enabled' => false,
-                        'field_arguments' => array(),
-                        'field_options' => array(),
-                    ),
-                    'create' => array(
+                        'field_arguments' => [],
+                        'field_options' => [],
+                    ],
+                    'create' => [
                         'enabled' => false,
-                        'field_arguments' => array(),
-                        'field_options' => array(),
-                    ),
-                    'update' => array(
+                        'field_arguments' => [],
+                        'field_options' => [],
+                    ],
+                    'update' => [
                         'enabled' => false,
-                        'field_arguments' => array(),
-                        'field_options' => array(),
-                    ),
-                    'delete' => array(
+                        'field_arguments' => [],
+                        'field_options' => [],
+                    ],
+                    'delete' => [
                         'enabled' => false,
-                        'field_arguments' => array(),
-                        'field_options' => array(),
-                    ),
-                    'undelete' => array(
+                        'field_arguments' => [],
+                        'field_options' => [],
+                    ],
+                    'undelete' => [
                         'enabled' => false,
-                        'field_arguments' => array(),
-                        'field_options' => array(),
-                    ),
-                ),
-            ),
-        );
+                        'field_arguments' => [],
+                        'field_options' => [],
+                    ],
+                ],
+            ],
+        ];
 
         $config = new Configuration();
         $res = $process->process($config->getConfigTreeBuilder()->buildTree(), $configs);
