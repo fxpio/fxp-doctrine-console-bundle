@@ -15,8 +15,8 @@
     "prefer-stable": true,
     "require": {
         "php": "^7.1.0",
-        "symfony/framework-bundle": "^3.4.0|^4.0.0",
-        "symfony/expression-language": "^3.4.0|^4.0.0",
+        "symfony/framework-bundle": "^4.1.0",
+        "symfony/expression-language": "^4.1.0",
         "fxp/doctrine-console": "^1.0.0"
     },
     "require-dev": {
