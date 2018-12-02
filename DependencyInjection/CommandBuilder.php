@@ -77,7 +77,7 @@ abstract class CommandBuilder
         } elseif (isset($config['resource_adapter'])) {
             $id = self::buildResourceAdapter($container, $config['resource_adapter'], $classname);
         } else {
-            throw new InvalidConfigurationException(sprintf('An adapter must be configured on "fxp_doctrine_console.commands.%s". Available adapters: "%s"', $classname, implode(Configuration::getAdapters(), '", "')));
+            throw new InvalidConfigurationException(sprintf('An adapter must be configured on "fxp_doctrine_console.commands.%s". Available adapters: "%s"', $classname, implode('", "', Configuration::getAdapters())));
         }
 
         return $id;
