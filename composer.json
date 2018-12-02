@@ -15,13 +15,13 @@
     "prefer-stable": true,
     "require": {
         "php": "^7.1.0",
-        "symfony/framework-bundle": "^4.1.0",
-        "symfony/expression-language": "^4.1.0",
-        "fxp/doctrine-console": "^1.0.0"
+        "symfony/framework-bundle": "^4.2.0",
+        "symfony/expression-language": "^4.2.0",
+        "fxp/doctrine-console": "^1.1.0"
     },
     "require-dev": {
-        "fxp/default-value-bundle": "^1.0.0",
-        "fxp/resource-bundle": "^1.0.0"
+        "fxp/default-value-bundle": "^1.1.0",
+        "fxp/resource-bundle": "^1.1.0"
     },
     "autoload": {
         "psr-4": { "Fxp\\Bundle\\DoctrineConsoleBundle\\": "" },
@@ -31,7 +31,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-master": "1.1-dev"
         }
     }
 }

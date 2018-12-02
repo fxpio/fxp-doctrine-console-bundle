@@ -42,8 +42,9 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('fxp_doctrine_console');
+        $treeBuilder = new TreeBuilder('fxp_doctrine_console');
+        /* @var ArrayNodeDefinition $rootNode */
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->append($this->getCommands())
@@ -231,9 +232,9 @@ class Configuration implements ConfigurationInterface
      */
     protected static function createNode($name, $type = 'array')
     {
-        $treeBuilder = new TreeBuilder();
+        $treeBuilder = new TreeBuilder($name, $type);
         /* @var ArrayNodeDefinition|NodeDefinition $node */
-        $node = $treeBuilder->root($name, $type);
+        $node = $treeBuilder->getRootNode();
 
         return $node;
     }
